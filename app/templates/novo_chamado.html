@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Novo chamado · Akona Energy{% endblock %}
+{% block conteudo %}
+<p><a href="/chamados">← Voltar para meus chamados</a></p>
+<h1>Abrir novo chamado</h1>
+<p class="alerta" role="note">
+  Formulário ilustrativo: esta demonstração não grava dados. O botão de envio fica desativado.
+</p>
+<form>
+  <label for="tipo">Tipo de problema</label>
+  <select id="tipo" name="tipo">
+    {% for tipo in tipos %}
+    <option>{{ tipo }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="descricao">Descrição</label>
+  <textarea id="descricao" name="descricao" rows="4" placeholder="Ex.: poste em frente à praça está apagado desde ontem."></textarea>
+
+  <p><button class="botao" type="submit" disabled>Enviar chamado</button></p>
+</form>
+{% endblock %}

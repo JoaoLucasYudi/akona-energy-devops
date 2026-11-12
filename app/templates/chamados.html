@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "_status.html" import selo %}
+{% block titulo %}Meus chamados · Akona Energy{% endblock %}
+{% block conteudo %}
+<h1>Meus chamados</h1>
+<p>Olá, {{ cidadao.nome }} ({{ cidadao.bairro }}).</p>
+<p><a class="botao" href="/chamados/novo">Abrir novo chamado</a></p>
+
+<table>
+  <caption>Chamados abertos por você</caption>
+  <thead>
+    <tr><th scope="col">Nº</th><th scope="col">Tipo</th><th scope="col">Status</th><th scope="col">Aberto em</th></tr>
+  </thead>
+  <tbody>
+    {% for chamado in chamados %}
+    <tr>
+      <td><a href="/chamados/{{ chamado.id }}">#{{ chamado.id }}</a></td>
+      <td>{{ chamado.tipo }}</td>
+      <td>{{ selo(chamado.status) }}</td>
+      <td>{{ chamado.data_abertura }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

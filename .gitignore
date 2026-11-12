@@ -1,3 +1,23 @@
+# Segredos e variáveis locais
 .env
+.env.*
+!.env.example
+
+# Terraform: state, variáveis e cache do provider
+*.tfstate
+*.tfstate.*
 *.tfvars
-*.tfstate*
+!*.tfvars.example
+.terraform/
+crash.log
+crash.*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Sistema
+.DS_Store
