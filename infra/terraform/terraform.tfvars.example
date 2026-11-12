@@ -1,0 +1,15 @@
+# Exemplo de variáveis do Terraform. Valores falsos: NÃO coloque segredos aqui.
+#
+# Como usar:
+#   1. cp terraform.tfvars.example terraform.tfvars   (o terraform.tfvars é ignorado pelo Git)
+#   2. Troque "trocar-me" pelo ID da assinatura: az account show --query id -o tsv
+#   3. terraform init && terraform plan
+#
+# As demais variáveis têm padrão em variables.tf; descomente só se precisar mudar.
+
+subscription_id = "trocar-me"
+
+# location                = "eastus2"
+# project_name            = "akona-energy"
+# container_image         = "ghcr.io/joaolucasyudi/akona-energy-devops:latest" # sempre em minúsculas
+# enable_error_simulation = false # true só durante a demonstração do alerta
