@@ -1,0 +1,43 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: akona-energy
+    folder: Akona Energy
+    interval: 30s
+    rules:
+      # Uma instância de alerta por job (mvp-local e mvp-prod).
+      - uid: taxa-erro-alta
+        title: Taxa de erro alta
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              refId: A
+              expr: >-
+                sum by (job) (rate(http_requests_total{status="5xx"}[1m]))
+                / sum by (job) (rate(http_requests_total[1m]))
+              instant: true
+              range: false
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions:
+                - evaluator:
+                    type: gt
+                    params: [0.05]
+        for: 1m
+        # Sem tráfego a razão é 0/0: não é incidente, então conta como OK.
+        noDataState: OK
+        execErrState: OK
+        labels:
+          severidade: alta
+        annotations:
+          summary: Mais de 5% das respostas de {{ $labels.job }} são 5xx há 1 minuto.
