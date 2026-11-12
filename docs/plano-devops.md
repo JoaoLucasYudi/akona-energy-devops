@@ -480,5 +480,4 @@ Valores fechados em 11/11, para uso nos textos do app, na Ficha Técnica, no REA
 
 ## Pendências em aberto
 
-- [ ] Resultado do teste de viabilidade na Azure for Students (H2b).
 - [ ] Confirmação com o professor: pontuação (14 ou 10) e canal de envio (portal ou Teams).
