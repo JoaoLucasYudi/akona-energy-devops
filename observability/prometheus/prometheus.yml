@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # App rodando no docker compose (serviço "app").
+  - job_name: mvp-local
+    static_configs:
+      - targets: ["app:8000"]
+
+  # MVP publicado no Azure Container Apps. Preenchido no E6b, depois do
+  # terraform apply (H4): troque a lista vazia pelo FQDN do Container App,
+  # obtido com `terraform -chdir=infra/terraform output -raw app_fqdn`,
+  # no formato ["<app_fqdn>:443"]. Enquanto vazia, o job não tem alvos.
+  - job_name: mvp-prod
+    scheme: https
+    static_configs:
+      - targets: []
