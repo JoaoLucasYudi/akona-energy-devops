@@ -1,0 +1,31 @@
+{
+  "cidadaos": [
+    {"id": 1, "nome": "Ana Fictícia da Silva", "bairro": "Presidente Altino"},
+    {"id": 2, "nome": "Bruno Exemplo Souza", "bairro": "Centro"},
+    {"id": 3, "nome": "Carla Demonstração Lima", "bairro": "Vila Yara"},
+    {"id": 4, "nome": "Diego Simulado Costa", "bairro": "Rochdale"},
+    {"id": 5, "nome": "Elisa Modelo Pereira", "bairro": "Jardim Bussocaba"}
+  ],
+  "chamados": [
+    {"id": 101, "cidadao_id": 1, "tipo": "poste apagado", "bairro": "Presidente Altino", "status": "aberto", "prioridade": "média", "data_abertura": "2026-11-09"},
+    {"id": 102, "cidadao_id": 1, "tipo": "lâmpada piscando", "bairro": "Presidente Altino", "status": "em andamento", "prioridade": "baixa", "data_abertura": "2026-11-02"},
+    {"id": 103, "cidadao_id": 1, "tipo": "queda de energia", "bairro": "Presidente Altino", "status": "resolvido", "prioridade": "alta", "data_abertura": "2026-10-21"},
+    {"id": 104, "cidadao_id": 1, "tipo": "fio caído", "bairro": "Presidente Altino", "status": "resolvido", "prioridade": "alta", "data_abertura": "2026-10-05"},
+    {"id": 105, "cidadao_id": 2, "tipo": "poste apagado", "bairro": "Centro", "status": "aberto", "prioridade": "média", "data_abertura": "2026-11-10"},
+    {"id": 106, "cidadao_id": 2, "tipo": "queda de energia", "bairro": "Centro", "status": "em andamento", "prioridade": "alta", "data_abertura": "2026-11-08"},
+    {"id": 107, "cidadao_id": 2, "tipo": "lâmpada piscando", "bairro": "Centro", "status": "resolvido", "prioridade": "baixa", "data_abertura": "2026-10-18"},
+    {"id": 108, "cidadao_id": 2, "tipo": "poste apagado", "bairro": "Centro", "status": "resolvido", "prioridade": "média", "data_abertura": "2026-10-12"},
+    {"id": 109, "cidadao_id": 3, "tipo": "fio caído", "bairro": "Vila Yara", "status": "aberto", "prioridade": "alta", "data_abertura": "2026-11-11"},
+    {"id": 110, "cidadao_id": 3, "tipo": "poste apagado", "bairro": "Vila Yara", "status": "em andamento", "prioridade": "média", "data_abertura": "2026-11-04"},
+    {"id": 111, "cidadao_id": 3, "tipo": "lâmpada piscando", "bairro": "Vila Yara", "status": "aberto", "prioridade": "baixa", "data_abertura": "2026-11-06"},
+    {"id": 112, "cidadao_id": 3, "tipo": "queda de energia", "bairro": "Vila Yara", "status": "resolvido", "prioridade": "alta", "data_abertura": "2026-10-27"},
+    {"id": 113, "cidadao_id": 4, "tipo": "poste apagado", "bairro": "Rochdale", "status": "aberto", "prioridade": "média", "data_abertura": "2026-11-07"},
+    {"id": 114, "cidadao_id": 4, "tipo": "queda de energia", "bairro": "Rochdale", "status": "aberto", "prioridade": "alta", "data_abertura": "2026-11-10"},
+    {"id": 115, "cidadao_id": 4, "tipo": "fio caído", "bairro": "Rochdale", "status": "em andamento", "prioridade": "alta", "data_abertura": "2026-11-05"},
+    {"id": 116, "cidadao_id": 4, "tipo": "lâmpada piscando", "bairro": "Rochdale", "status": "resolvido", "prioridade": "baixa", "data_abertura": "2026-10-15"},
+    {"id": 117, "cidadao_id": 5, "tipo": "poste apagado", "bairro": "Jardim Bussocaba", "status": "em andamento", "prioridade": "média", "data_abertura": "2026-11-03"},
+    {"id": 118, "cidadao_id": 5, "tipo": "lâmpada piscando", "bairro": "Jardim Bussocaba", "status": "aberto", "prioridade": "baixa", "data_abertura": "2026-11-09"},
+    {"id": 119, "cidadao_id": 5, "tipo": "queda de energia", "bairro": "Jardim Bussocaba", "status": "resolvido", "prioridade": "alta", "data_abertura": "2026-10-30"},
+    {"id": 120, "cidadao_id": 5, "tipo": "poste apagado", "bairro": "Jardim Bussocaba", "status": "resolvido", "prioridade": "média", "data_abertura": "2026-10-09"}
+  ]
+}

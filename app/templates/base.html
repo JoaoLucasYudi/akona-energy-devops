@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Akona Energy{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topo">
+    <a class="marca" href="/">Akona Energy</a>
+    <nav aria-label="Principal">
+      <a href="/chamados">Sou cidadão</a>
+      <a href="/gestao">Gestão</a>
+      <a href="/privacidade">Privacidade</a>
+    </nav>
+  </header>
+  <p class="aviso-demo">Demonstração somente leitura: todos os dados são fictícios e nada é gravado.</p>
+  <main>
+    {% block conteudo %}{% endblock %}
+  </main>
+  <footer class="rodape">
+    <p>Akona Energy · MVP de demonstração · Osasco (SP)</p>
+  </footer>
+</body>
+</html>

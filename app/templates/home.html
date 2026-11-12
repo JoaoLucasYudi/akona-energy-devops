@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<section class="destaque">
+  <h1>Iluminação e energia que funcionam para quem mora em Osasco</h1>
+  <p>
+    No Akona Energy, o cidadão reporta problemas de iluminação pública e de energia
+    (poste apagado, lâmpada piscando, fio caído, queda de energia) e a gestão, seja a
+    prefeitura ou a concessionária, acompanha, prioriza e resolve os chamados com dados.
+  </p>
+</section>
+
+<section>
+  <h2>Escolha uma área da demonstração</h2>
+  <p>Não há senha: cada link abre uma visão pronta, com dados fictícios.</p>
+  <div class="cartoes">
+    <a class="cartao" href="/chamados">
+      <strong>Sou cidadão</strong>
+      <span>Veja os chamados de uma moradora fictícia e como abrir um novo.</span>
+    </a>
+    <a class="cartao" href="/gestao">
+      <strong>Gestão</strong>
+      <span>Veja todos os chamados e as contagens por status, tipo e bairro.</span>
+    </a>
+  </div>
+</section>
+{% endblock %}

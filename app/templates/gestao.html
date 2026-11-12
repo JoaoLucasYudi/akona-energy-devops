@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "_status.html" import selo %}
+{% block titulo %}Gestão · Akona Energy{% endblock %}
+{% block conteudo %}
+<h1>Painel da gestão</h1>
+<p>{{ chamados | length }} chamados registrados em Osasco.</p>
+
+<div class="contagens">
+  {% for titulo, linhas in contagens %}
+  <table>
+    <caption>{{ titulo }}</caption>
+    <tbody>
+      {% for rotulo, total in linhas %}
+      <tr><th scope="row">{{ rotulo }}</th><td>{{ total }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+</div>
+
+<table>
+  <caption>Todos os chamados</caption>
+  <thead>
+    <tr>
+      <th scope="col">Nº</th><th scope="col">Tipo</th><th scope="col">Bairro</th>
+      <th scope="col">Status</th><th scope="col">Prioridade</th><th scope="col">Aberto em</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for chamado in chamados %}
+    <tr>
+      <td>#{{ chamado.id }}</td>
+      <td>{{ chamado.tipo }}</td>
+      <td>{{ chamado.bairro }}</td>
+      <td>{{ selo(chamado.status) }}</td>
+      <td>{{ chamado.prioridade }}</td>
+      <td>{{ chamado.data_abertura }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
