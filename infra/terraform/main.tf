@@ -28,6 +28,12 @@ resource "azurerm_container_app_environment" "main" {
   resource_group_name        = azurerm_resource_group.main.name
   log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   tags                       = local.tags
+
+  # A Azure cria o ambiente com o perfil Consumption; declarado para não haver drift.
+  workload_profile {
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+  }
 }
 
 # Sem VM, NSG ou IP público de máquina: o único ponto de entrada é o ingress
@@ -37,6 +43,7 @@ resource "azurerm_container_app" "main" {
   container_app_environment_id = azurerm_container_app_environment.main.id
   resource_group_name          = azurerm_resource_group.main.name
   revision_mode                = "Single"
+  workload_profile_name        = "Consumption"
   tags                         = local.tags
 
   template {
@@ -72,6 +79,7 @@ resource "azurerm_container_app" "main" {
     external_enabled           = true
     target_port                = 8000
     allow_insecure_connections = false
+    transport                  = "http"
 
     traffic_weight {
       latest_revision = true
