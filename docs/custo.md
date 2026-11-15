@@ -1,6 +1,6 @@
 # Estimativa de custo
 
-A infraestrutura fica no ar de 14/11/2026 até a limpeza em 01/12/2026, cerca de 17 dias. Um budget de US$10 no resource group, a criar na tarefa H4, vai proteger contra gasto inesperado.
+A infraestrutura fica no ar de 14/11/2026 até a limpeza em 01/12/2026, cerca de 17 dias. A assinatura é a Azure for Students: o gasto sai do crédito da conta e, se o crédito acabar, a assinatura é suspensa, sem cobrança em cartão. Por isso não há budget configurado.
 
 **Pendente (E8b):** os valores em dólar desta página saem da [Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/). O link da estimativa salva e o print (item 20 do checklist de evidências) entram no E8b.
 
@@ -39,8 +39,6 @@ O plano previa uma ordem de grandeza de US$12–14 por mês e US$5–7 no perío
 
 ## Controle de gasto
 
-- **Budget:** US$10 no resource group, com alertas em 50% e 90%. Pela estimativa do plano, o alerta de 50% deve disparar no período, e isso é esperado.
+- **Crédito da Azure for Students:** o consumo é acompanhado pelo saldo de crédito no portal da Students. Não há budget, porque a assinatura não gera cobrança em cartão.
 - **Limites na própria infra:** réplica única, recursos mínimos (0.25 vCPU, 0.5 GiB) e cota diária de logs.
 - **Limpeza:** em 01/12/2026, `terraform destroy`, exclusão do service principal e conferência no Cost Management de que não sobrou gasto.
-
-**Pendente (E8b):** confirmar que o budget foi criado no portal (tarefa H4) e incluir o print (item 9 do checklist de evidências). Se a assinatura Azure for Students não permitir budgets, registrar aqui que o acompanhamento foi feito pelo crédito no portal de patrocínio.

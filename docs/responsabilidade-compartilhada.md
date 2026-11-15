@@ -33,8 +33,8 @@ Os controles abaixo são os definidos no plano. A coluna "Épico" indica onde ca
 | Ingress | `allow_insecure_connections = false` e nenhuma porta além da 443. Não há VM nem SSH | E4 |
 | Dados | Só dados sintéticos; ver [LGPD](lgpd.md) | E1 |
 | Monitoramento | Prometheus e Grafana locais com as 4 métricas de ouro e o alerta "Taxa de erro alta" | E6 |
-| Custo | Budget de US$10 e `terraform destroy` após a correção; ver [Custo](custo.md) | H4, E9 |
+| Custo | Acompanhamento pelo crédito da Azure for Students e `terraform destroy` após a correção; ver [Custo](custo.md) | E9 |
 
 O GitHub tem um papel parecido com o da Azure para os runners do Actions e o GHCR: cuida da infraestrutura deles. A equipe responde pelo conteúdo do workflow, pelas permissões de cada job, pela fixação das actions de terceiros por SHA e por manter o pacote do GHCR público.
 
-**Pendente (E8b):** os controles de imagem, pipeline, service principal, ingress, monitoramento e budget dependem do E2 ao E6. Confirmar cada linha contra o que foi entregue.
+**Pendente (E8b):** os controles de imagem, pipeline, service principal, ingress e monitoramento dependem do E2 ao E6. Confirmar cada linha contra o que foi entregue.
