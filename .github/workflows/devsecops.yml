@@ -10,7 +10,8 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Na main não cancela: um push novo não pode interromper um deploy em andamento.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
   # Nome literal em minúsculas: o usuário do GitHub tem maiúsculas e o Docker rejeita.
@@ -88,3 +89,36 @@ jobs:
         run: |
           docker push "$IMAGE:$GITHUB_SHA"
           docker push "$IMAGE:latest"
+
+  deploy:
+    needs: build-scan-push
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-producao
+      cancel-in-progress: false
+    steps:
+      - name: Login na Azure
+        uses: azure/login@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Troca a imagem do Container App
+        env:
+          RG: ${{ vars.AZURE_RESOURCE_GROUP }}
+          APP: ${{ vars.AZURE_CONTAINERAPP_NAME }}
+        run: |
+          az extension add --name containerapp --upgrade --yes
+          az containerapp update --name "$APP" --resource-group "$RG" \
+            --image "$IMAGE:$GITHUB_SHA" --output none
+      - name: Teste de fumaça
+        env:
+          FQDN: ${{ vars.APP_FQDN }}
+        run: |
+          for i in $(seq 1 18); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "https://$FQDN/health" || true)
+            echo "Tentativa $i: HTTP $code"
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 10
+          done
+          echo "::error::/health não respondeu 200 em 3 minutos"
+          exit 1

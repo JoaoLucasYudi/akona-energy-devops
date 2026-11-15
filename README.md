@@ -72,7 +72,17 @@ A preencher (E8b).
 
 ## Rollback
 
-A preencher (E8b).
+O rollback é manual, para um SHA que já passou pelo pipeline. Há dois caminhos:
+
+1. **Pelo GitHub Actions:** na aba Actions, abra a execução do workflow `devsecops` do commit anterior na `main` e use **Re-run all jobs**. O job `deploy` reimplanta a imagem daquele SHA.
+2. **Pelo Azure CLI:**
+
+   ```bash
+   az containerapp update --name ca-akona-energy-prod --resource-group rg-akona-energy-prod \
+     --image ghcr.io/joaolucasyudi/akona-energy-devops:<sha-anterior>
+   ```
+
+O próximo push na `main` volta a implantar o código mais recente. Para um rollback que dure, reverta o commit com `git revert` e abra um PR.
 
 ## Como destruir a infraestrutura
 
