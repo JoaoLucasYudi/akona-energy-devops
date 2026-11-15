@@ -8,11 +8,10 @@ scrape_configs:
     static_configs:
       - targets: ["app:8000"]
 
-  # MVP publicado no Azure Container Apps. Preenchido no E6b, depois do
-  # terraform apply (H4): troque a lista vazia pelo FQDN do Container App,
-  # obtido com `terraform -chdir=infra/terraform output -raw app_fqdn`,
-  # no formato ["<app_fqdn>:443"]. Enquanto vazia, o job não tem alvos.
+  # MVP publicado no Azure Container Apps (só HTTPS). O FQDN vem de
+  # `terraform -chdir=infra/terraform output -raw app_fqdn`.
   - job_name: mvp-prod
     scheme: https
+    metrics_path: /metrics
     static_configs:
-      - targets: []
+      - targets: ["ca-akona-energy-prod.salmoncoast-770d275b.eastus2.azurecontainerapps.io:443"]
