@@ -31,6 +31,7 @@ Entrega da disciplina Secure DevOps Tools & Cloud Computing (FIAP), prazo 19/11/
 ## Ambiente
 
 - Mac M1: `docker build` local gera imagem arm64, ok para testes. A imagem de produção é sempre a do CI (amd64). Nunca dê push de imagem local.
+- Prints de evidência ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, nomeados `NN-descricao.png` pelo checklist do plano. Não copie para o repositório.
 - Credenciais vêm de `az login` e `gh auth login` da conta pessoal. Confira com `az account show` e `gh auth status` antes de qualquer comando na nuvem.
 
 ## Agent skills

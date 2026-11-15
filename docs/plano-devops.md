@@ -41,7 +41,7 @@ Todas as decisões abaixo foram alinhadas em 10/11 e são premissas fixas para a
 | D11 | Alerta | Regra de alerta do Grafana; evidência = print em estado Firing | Sem canal de notificação |
 | D12 | Execução barrada | Uma execução barrada pelo Semgrep e a corrigida | É o que o enunciado pede |
 | D13 | Repositório | Repositório público dedicado ao MVP e à entrega de DevOps | Separado dos repos das outras disciplinas |
-| D14 | Custos | Budget de US$10 no resource group criado pelo portal (se a assinatura permitir budgets; na Students, acompanhar o crédito no portal de patrocínio); `terraform destroy` após a correção | Estimativa de US$5–7 no período 14/11–01/12, a confirmar na calculadora; o alerta de 50% deve disparar e isso é esperado |
+| D14 | Custos | Sem budget: na Azure for Students o gasto sai do crédito e a assinatura é suspensa quando ele acaba, sem cobrança em cartão; o acompanhamento é pelo saldo de crédito no portal da Students; `terraform destroy` após a correção | Budget não é exigido pelo enunciado (só a estimativa de custo); decidido em 15/11, na H4. Estimativa de US$5–7 no período 14/11–01/12, a confirmar na calculadora |
 | D15 | Specs | Uma issue por épico no Linear (time `JOA`, projeto `gs-devops`, JOA-22 a JOA-38), com E6 e E8 divididos em duas (parte que roda cedo e parte que depende da produção) e as tarefas humanas H1, H2, H2b, H3, H4 e H7 como issues próprias; H5 está dentro do E5, H6 dentro do E6b e H8 é o E9. O bloqueio real entre issues é o do Linear | Preferência do usuário; a divisão existe para permitir worktrees em paralelo |
 | D16 | Actions | Oficiais (`actions/*`, `docker/*`, `azure/*`) por tag de versão maior; terceiros (Trivy, Gitleaks) por SHA completo do commit, com a versão em comentário | Tags são mutáveis; fixar por SHA protege contra comprometimento do repositório da action |
 | D17 | PDF | `relatorio.md` → HTML → PDF pelo Chrome headless; diagrama Mermaid exportado como PNG | Sem LaTeX; preserva links clicáveis |
@@ -64,7 +64,6 @@ flowchart LR
   subgraph AZ["Azure · eastus2"]
     CA["Container App (MVP)<br/>FastAPI + Jinja2, porta 8000<br/>1 réplica · 0.25 vCPU · 0.5 GiB<br/>ingress só HTTPS 443, sem SSH<br/>/health e /metrics expostos"]
     LA["Log Analytics<br/>logs, 30 dias"]
-    BU["Budget US$10<br/>alertas 50% e 90%"]
   end
   C["Cidadão<br/>celular/navegador"]
   AG -->|git push| R
@@ -372,8 +371,8 @@ A demonstração vive num branch próprio, `demo/barrado-semgrep`, criado a part
 - `docs/arquitetura.md`: diagrama em Mermaid (renderiza no GitHub) com GitHub → Actions → GHCR → Container Apps → cidadão, e Prometheus/Grafana locais raspando `/metrics`.
 - `docs/responsabilidade-compartilhada.md`: tabela "Azure × equipe" para um PaaS de containers. Azure: datacenter, rede física, hosts, orquestração do Container Apps, TLS do ingress. Equipe: imagem e dependências, código, segredos, escopo do service principal, configuração do ingress, dados e LGPD, monitoramento da aplicação.
 - `docs/lgpd.md`: o MVP não coleta nem armazena dados pessoais (mock sintético; os cidadãos são fictícios e o formulário de novo chamado não grava nada). Os únicos dados potencialmente pessoais são IPs de clientes nos logs de sistema do Container Apps, guardados no Log Analytics por 30 dias, em eastus2. O documento registra que uma versão real exigiria avaliar a transferência internacional (LGPD, art. 33) ou migrar para brazilsouth, e cita a minimização, a página `/privacidade` e o fato de `/metrics` só expor contadores técnicos.
-- `docs/custo.md`: estimativa feita na Azure Pricing Calculator (link salvo e print), com Container Apps consumption a 0.25 vCPU / 0.5 GiB com 1 réplica sempre ativa, Log Analytics com cota diária de 0,5 GB, GHCR e GitHub Actions gratuitos para repositório público. Apresentar custo mensal e o custo do período 14/11–01/12, mais o budget de US$10. Ordem de grandeza esperada, a confirmar na calculadora: US$12–14 por mês e US$5–7 no período, já descontada a franquia gratuita mensal do Container Apps.
-- `docs/evidencias/`: prints nomeados `NN-descricao.png` na ordem do checklist.
+- `docs/custo.md`: estimativa feita na Azure Pricing Calculator (link salvo e print), com Container Apps consumption a 0.25 vCPU / 0.5 GiB com 1 réplica sempre ativa, Log Analytics com cota diária de 0,5 GB, GHCR e GitHub Actions gratuitos para repositório público. Apresentar custo mensal e o custo do período 14/11–01/12, mais o acompanhamento pelo crédito da Azure for Students (sem budget, ver D14). Ordem de grandeza esperada, a confirmar na calculadora: US$12–14 por mês e US$5–7 no período, já descontada a franquia gratuita mensal do Container Apps.
+- Prints: ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, nomeados `NN-descricao.png` na ordem do checklist.
 - `docs/relatorio/relatorio.md` e o PDF gerado a partir dele: Markdown → HTML (biblioteca Python `markdown`, em `requirements-dev.txt`) → PDF pelo Chrome headless (`--headless --print-to-pdf`), com links clicáveis e prints legendados. O diagrama Mermaid entra como PNG exportado para `docs/evidencias/00-arquitetura.png`, porque o conversor não renderiza Mermaid. O comando completo fica em `scripts/gerar_pdf.sh`.
 
 **Ordem do PDF:** capa (produto, disciplina, integrantes com nome e RM); links (repositório, URL do MVP); arquitetura; Container; IaC e porta admin; Pipeline e execuções barradas; Observabilidade; Responsabilidade compartilhada; LGPD; Custo; Conclusão técnica.
@@ -394,8 +393,6 @@ A demonstração vive num branch próprio, `demo/barrado-semgrep`, criado a part
 - [ ] Até 30/11: não alterar a infra nem o repositório de forma que quebre a correção; checar a URL a cada dois dias.
 - [ ] Em 01/12: `terraform destroy`, excluir o service principal (`az ad sp delete`), remover o secret `AZURE_CREDENTIALS` e confirmar no Cost Management que não há gasto residual.
 
-O budget criado pelo portal pode continuar como proteção da conta depois da limpeza, ou ser apagado junto.
-
 ## Tarefas humanas e aprovações
 
 Nove tarefas exigem credenciais pessoais ou acesso ao portal, ou sua aprovação explícita. As specs param e pedem ação humana quando chegam nelas.
@@ -406,15 +403,15 @@ Nove tarefas exigem credenciais pessoais ou acesso ao portal, ou sua aprovação
 | H2 | Instalar Docker, Terraform 1.9+, Azure CLI, GitHub CLI, semgrep e trivy; fazer `az login` e `gh auth login` para os agentes usarem as credenciais (em 11/11 só Docker e `gh` estavam instalados; `pandoc` não é necessário) | 12/11 | Todos |
 | H2b | Teste de viabilidade na Azure for Students, antes de qualquer Terraform: `az account show`; `az provider register` para `Microsoft.App` e `Microsoft.OperationalInsights`; conferir se `eastus2` está nas regiões permitidas pela política da assinatura; conferir se é possível criar service principal e atribuir papel no escopo de um resource group; conferir se budgets estão disponíveis. Se região falhar, trocar `location` por uma região permitida; se service principal ou Container Apps falharem, usar a assinatura pessoal | 12/11 | E4, E5 |
 | H3 | Após o primeiro push de imagem na `main`, tornar o pacote do GHCR público (Package settings → Change visibility) | 13/11 | E4 |
-| H4 | Preencher `terraform.tfvars`; aprovar o `terraform apply` executado pelo agente; criar no portal um budget de US$10 no resource group, com alertas em 50% e 90% (se a assinatura permitir) | 14/11 | E5, E6 (prod) |
+| H4 | Preencher `terraform.tfvars`; aprovar o `terraform apply` executado pelo agente (budget dispensado, ver D14) | 14/11 | E5, E6 (prod) |
 | H5 | Aprovar a criação do service principal (`az ad sp create-for-rbac --role Contributor --scopes <resource group> --json-auth`) e a gravação do JSON no secret `AZURE_CREDENTIALS`; as Variables `AZURE_RESOURCE_GROUP`, `AZURE_CONTAINERAPP_NAME` e `APP_FQDN` o agente cria com `gh variable set` | 15/11 | E5 |
 | H6 | Roteiro do disparo do alerta do E6 (ligar flag, gerar tráfego, prints, desligar flag) | 16/11 | E8 |
-| H7 | Capturar e conferir todos os prints do checklist e salvar em `docs/evidencias/` | 16–18/11 | E8 |
+| H7 | Capturar e conferir todos os prints do checklist e salvar em `/Users/jyudi/Documents/prints-gs-devops-4nao/` (fora do Git) | 16–18/11 | E8 |
 | H8 | Envio do PDF e aprovação da limpeza (E9) | 19/11 e 01/12 | — |
 
 ## Checklist de evidências do PDF
 
-São 20 prints, numerados na ordem em que aparecem no PDF; o nome do arquivo em `docs/evidencias/` segue o número.
+São 19 prints (o 09 foi dispensado; a numeração foi mantida), na ordem em que aparecem no PDF. Ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, e o nome do arquivo segue o número (`NN-descricao.png`).
 
 - [ ] 01 · Container · Trecho do Dockerfile com multi-stage e `USER 10001`
 - [ ] 02 · Container · `docker compose up` e `docker ps` com a stack de pé
@@ -424,7 +421,7 @@ São 20 prints, numerados na ordem em que aparecem no PDF; o nome do arquivo em 
 - [ ] 06 · IaC · `.gitignore` com state e tfvars
 - [ ] 07 · IaC · Resource group no portal com todos os recursos
 - [ ] 08 · IaC · Aba Ingress do Container App (só HTTPS, sem porta admin)
-- [ ] 09 · Custo · Budget de US$10 configurado
+- ~~09 · Custo · Budget de US$10 configurado~~ (dispensado, ver D14)
 - [ ] 10 · Pipeline · Grafo do workflow verde completo, incluindo `deploy`
 - [ ] 11 · Pipeline · Secrets (só o nome `AZURE_CREDENTIALS`) e Variables
 - [ ] 12 · Pipeline · Pacote no GHCR com as tags por SHA
@@ -449,13 +446,12 @@ O maior risco é o Trivy barrar a imagem boa por CVEs da base Debian; o segundo 
 | Nome de imagem com maiúsculas (`JoaoLucasYudi`) | `docker build`, push e `az containerapp update` falham com "invalid reference format" | Nome literal em minúsculas no workflow, no Terraform e no README (D6) |
 | Action de terceiros comprometida por tag reescrita | Código malicioso roda com `packages: write` | Fixar por SHA (D16); `permissions` mínimas por job |
 | Execução vermelha do E7 cancelada pelo `concurrency` | Evidência 13 se perde | Esperar a execução terminar antes do commit de correção |
-| Alerta de 50% do budget dispara | Susto, sem impacto real | Esperado pela estimativa de custo; conferir no Cost Management |
 | Pacote do GHCR privado | Container Apps não consegue puxar a imagem; `terraform apply` falha | H3 antes do H4; conferir em janela anônima com `docker pull` |
 | Nomes de métrica do instrumentator diferentes do esperado | Painéis vazios | Conferir no `/metrics` real antes de fechar o dashboard |
 | Prometheus local não alcança a URL pública (proxy, rede da faculdade) | Sem dados de produção nos painéis | Rodar em rede doméstica; testar com `curl https://<fqdn>/metrics` |
 | Semgrep não detecta o padrão da demonstração | E7 não barra | Validar localmente antes do push; trocar por outro padrão do `p/python` |
 | Agente executa comando destrutivo sem querer | Infra apagada ou segredo exposto | `apply`, `destroy`, service principal e secrets só com aprovação explícita no Claude Code |
-| Gasto inesperado na conta pessoal | Cobrança no cartão | Budget de US$10 pelo portal, réplica única, cota de logs de 0,5 GB/dia, `terraform destroy` em 01/12 |
+| Gasto inesperado na conta pessoal | Cobrança no cartão | Réplica única, cota de logs de 0,5 GB/dia, `terraform destroy` em 01/12 |
 | Divergência de pontuação (14 vs 10) ou de canal (portal vs Teams) | Entrega no lugar errado | Confirmar com o professor na mentoria antes de 19/11 |
 
 ## Definições do produto e da equipe
