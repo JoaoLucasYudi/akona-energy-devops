@@ -21,3 +21,6 @@ __pycache__/
 
 # Sistema
 .DS_Store
+
+# Relatório gerado: embute os prints, que ficam fora do Git
+docs/relatorio/relatorio.pdf

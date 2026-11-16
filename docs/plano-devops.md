@@ -41,7 +41,7 @@ Todas as decisões abaixo foram alinhadas em 10/11 e são premissas fixas para a
 | D11 | Alerta | Regra de alerta do Grafana; evidência = print em estado Firing | Sem canal de notificação |
 | D12 | Execução barrada | Uma execução barrada pelo Semgrep e a corrigida | É o que o enunciado pede |
 | D13 | Repositório | Repositório público dedicado ao MVP e à entrega de DevOps | Separado dos repos das outras disciplinas |
-| D14 | Custos | Sem budget: na Azure for Students o gasto sai do crédito e a assinatura é suspensa quando ele acaba, sem cobrança em cartão; o acompanhamento é pelo saldo de crédito no portal da Students; `terraform destroy` após a correção | Budget não é exigido pelo enunciado (só a estimativa de custo); decidido em 15/11, na H4. Estimativa de US$5–7 no período 14/11–01/12, a confirmar na calculadora |
+| D14 | Custos | Sem budget: na Azure for Students o gasto sai do crédito e a assinatura é suspensa quando ele acaba, sem cobrança em cartão; o acompanhamento é pelo saldo de crédito no portal da Students; `terraform destroy` após a correção | Budget não é exigido pelo enunciado (só a estimativa de custo); decidido em 15/11, na H4. Estimativa de US$5,62 no período 14/11–01/12 (ver `docs/custo.md`) |
 | D15 | Specs | Uma issue por épico no Linear (time `JOA`, projeto `gs-devops`, JOA-22 a JOA-38), com E6 e E8 divididos em duas (parte que roda cedo e parte que depende da produção) e as tarefas humanas H1, H2, H2b, H3, H4 e H7 como issues próprias; H5 está dentro do E5, H6 dentro do E6b e H8 é o E9. O bloqueio real entre issues é o do Linear | Preferência do usuário; a divisão existe para permitir worktrees em paralelo |
 | D16 | Actions | Oficiais (`actions/*`, `docker/*`, `azure/*`) por tag de versão maior; terceiros (Trivy, Gitleaks) por SHA completo do commit, com a versão em comentário | Tags são mutáveis; fixar por SHA protege contra comprometimento do repositório da action |
 | D17 | PDF | `relatorio.md` → HTML → PDF pelo Chrome headless; diagrama Mermaid exportado como PNG | Sem LaTeX; preserva links clicáveis |
@@ -371,9 +371,9 @@ A demonstração vive num branch próprio, `demo/barrado-semgrep`, criado a part
 - `docs/arquitetura.md`: diagrama em Mermaid (renderiza no GitHub) com GitHub → Actions → GHCR → Container Apps → cidadão, e Prometheus/Grafana locais raspando `/metrics`.
 - `docs/responsabilidade-compartilhada.md`: tabela "Azure × equipe" para um PaaS de containers. Azure: datacenter, rede física, hosts, orquestração do Container Apps, TLS do ingress. Equipe: imagem e dependências, código, segredos, escopo do service principal, configuração do ingress, dados e LGPD, monitoramento da aplicação.
 - `docs/lgpd.md`: o MVP não coleta nem armazena dados pessoais (mock sintético; os cidadãos são fictícios e o formulário de novo chamado não grava nada). Os únicos dados potencialmente pessoais são IPs de clientes nos logs de sistema do Container Apps, guardados no Log Analytics por 30 dias, em eastus2. O documento registra que uma versão real exigiria avaliar a transferência internacional (LGPD, art. 33) ou migrar para brazilsouth, e cita a minimização, a página `/privacidade` e o fato de `/metrics` só expor contadores técnicos.
-- `docs/custo.md`: estimativa feita na Azure Pricing Calculator (link salvo e print), com Container Apps consumption a 0.25 vCPU / 0.5 GiB com 1 réplica sempre ativa, Log Analytics com cota diária de 0,5 GB, GHCR e GitHub Actions gratuitos para repositório público. Apresentar custo mensal e o custo do período 14/11–01/12, mais o acompanhamento pelo crédito da Azure for Students (sem budget, ver D14). Ordem de grandeza esperada, a confirmar na calculadora: US$12–14 por mês e US$5–7 no período, já descontada a franquia gratuita mensal do Container Apps.
+- `docs/custo.md`: estimativa em tabela Markdown, calculada com os preços públicos da Azure Retail Prices API (sem print da calculadora, decidido em 16/11), com Container Apps consumption a 0.25 vCPU / 0.5 GiB com 1 réplica sempre ativa, Log Analytics com cota diária de 0,5 GB, GHCR e GitHub Actions gratuitos para repositório público. Apresentar custo mensal e o custo do período 14/11–01/12, mais o acompanhamento pelo crédito da Azure for Students (sem budget, ver D14). Ordem de grandeza esperada: US$12–14 por mês e US$5–7 no período, já descontada a franquia gratuita mensal do Container Apps.
 - Prints: ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, nomeados `NN-descricao.png` na ordem do checklist.
-- `docs/relatorio/relatorio.md` e o PDF gerado a partir dele: Markdown → HTML (biblioteca Python `markdown`, em `requirements-dev.txt`) → PDF pelo Chrome headless (`--headless --print-to-pdf`), com links clicáveis e prints legendados. O diagrama Mermaid entra como PNG exportado para `docs/evidencias/00-arquitetura.png`, porque o conversor não renderiza Mermaid. O comando completo fica em `scripts/gerar_pdf.sh`.
+- `docs/relatorio/relatorio.md` e o PDF gerado a partir dele: Markdown → HTML (biblioteca Python `markdown`, em `requirements-dev.txt`) → PDF pelo Chrome headless (`--headless --print-to-pdf`), com links clicáveis e prints legendados. O diagrama Mermaid entra como PNG exportado para `docs/evidencias/00-arquitetura.png`, porque o conversor não renderiza Mermaid. O comando completo fica em `scripts/gerar_pdf.sh`, que liga `prints/` à pasta de prints (variável `PRINTS`) e `evidencias/` a `docs/evidencias`, para o `relatorio.md` não guardar caminhos absolutos. O PDF gerado fica fora do Git.
 
 **Ordem do PDF:** capa (produto, disciplina, integrantes com nome e RM); links (repositório, URL do MVP); arquitetura; Container; IaC e porta admin; Pipeline e execuções barradas; Observabilidade; Responsabilidade compartilhada; LGPD; Custo; Conclusão técnica.
 
@@ -411,7 +411,7 @@ Nove tarefas exigem credenciais pessoais ou acesso ao portal, ou sua aprovação
 
 ## Checklist de evidências do PDF
 
-São 19 prints (o 09 foi dispensado; a numeração foi mantida), na ordem em que aparecem no PDF. Ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, e o nome do arquivo segue o número (`NN-descricao.png`).
+São 18 prints (o 09 e o 20 foram dispensados; a numeração foi mantida), na ordem em que aparecem no PDF. Ficam fora do Git, em `/Users/jyudi/Documents/prints-gs-devops-4nao/`, e o nome do arquivo segue o número (`NN-descricao.png`).
 
 - [ ] 01 · Container · Trecho do Dockerfile com multi-stage e `USER 10001`
 - [ ] 02 · Container · `docker compose up` e `docker ps` com a stack de pé
@@ -432,7 +432,7 @@ São 19 prints (o 09 foi dispensado; a numeração foi mantida), na ordem em que
 - [ ] 17 · Observabilidade · Targets do Prometheus com `mvp-prod` UP
 - [ ] 18 · Observabilidade · Dashboard das 4 métricas de ouro com dados de produção
 - [ ] 19 · Observabilidade · Alerta "Taxa de erro alta" em Firing
-- [ ] 20 · Custo · Estimativa na Azure Pricing Calculator
+- ~~20 · Custo · Estimativa na Azure Pricing Calculator~~ (dispensado em 16/11: a estimativa fica em tabela em `docs/custo.md`)
 
 ## Riscos e mitigação
 

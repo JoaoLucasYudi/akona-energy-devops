@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
 # Gera docs/relatorio/relatorio.pdf a partir de docs/relatorio/relatorio.md:
 # Markdown -> HTML (biblioteca Python markdown) -> PDF (Chrome headless).
-# Caminhos de imagem no Markdown são relativos a docs/relatorio/.
+# Imagens no Markdown: prints/NN-*.png (pasta PRINTS, fora do Git) e
+# evidencias/*.png (docs/evidencias).
 set -euo pipefail
 
 raiz="$(cd "$(dirname "$0")/.." && pwd)"
 dir="$raiz/docs/relatorio"
 chrome="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 python="${PYTHON:-python3}"
+prints="${PRINTS:-$HOME/Documents/prints-gs-devops-4nao}"
+
+if [ ! -d "$prints" ]; then
+  echo "Pasta de prints não encontrada: $prints (defina PRINTS)" >&2
+  exit 1
+fi
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
+ln -s "$prints" "$tmp/prints"
+ln -s "$raiz/docs/evidencias" "$tmp/evidencias"
 
 {
   cat <<EOF
@@ -18,7 +27,7 @@ trap 'rm -rf "$tmp"' EXIT
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<base href="file://$dir/">
+<base href="file://$tmp/">
 <title>Akona Energy · Deploy Blindado</title>
 <style>
   body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #1a1a1a; }
@@ -27,7 +36,10 @@ trap 'rm -rf "$tmp"' EXIT
   th, td { border: 1px solid #bbb; padding: 4px 8px; text-align: left; vertical-align: top; }
   code { font-size: 0.92em; background: #f2f2f2; padding: 0 3px; }
   pre { background: #f2f2f2; padding: 8px; white-space: pre-wrap; }
-  img { max-width: 100%; }
+  img { max-width: 100%; border: 1px solid #ccc; display: block; margin: 0.6em auto 0.2em; }
+  p > em:only-child { display: block; text-align: center; font-size: 9.5pt; color: #555; margin-bottom: 1em; }
+  h2 { break-before: page; }
+  h3 { break-after: avoid; } img { break-inside: avoid; }
   a { color: #0b57d0; }
   @page { size: A4; margin: 18mm; }
 </style>

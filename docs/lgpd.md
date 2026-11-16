@@ -1,6 +1,6 @@
 # LGPD: onde ficam os dados pessoais
 
-O MVP do Akona Energy não coleta nem armazena dados pessoais. Os únicos dados potencialmente pessoais são os endereços IP de quem acessa a URL pública. Na infraestrutura definida no plano (E4, em construção em 11/11/2026), eles ficam nos logs enviados ao Log Analytics, na região eastus2, por 30 dias.
+O MVP do Akona Energy não coleta nem armazena dados pessoais. Os únicos dados potencialmente pessoais são os endereços IP de quem acessa a URL pública. Eles ficam nos logs enviados ao Log Analytics, na região eastus2, por 30 dias (`retention_in_days = 30` no Terraform aplicado).
 
 ## Dados da aplicação
 
@@ -23,7 +23,7 @@ O MVP do Akona Energy não coleta nem armazena dados pessoais. Os únicos dados 
 - **Minimização:** o MVP não pede nem guarda nenhum dado pessoal para funcionar.
 - **Transparência:** a página `/privacidade` diz o que é e o que não é coletado.
 - **Limitação do armazenamento:** os logs ficam 30 dias no Log Analytics, e toda a infraestrutura é destruída em 01/12/2026.
-- **Segurança:** pela infraestrutura definida no plano (E2 a E5), só HTTPS, nenhuma porta administrativa e segredos fora do repositório e da imagem.
+- **Segurança:** só HTTPS, nenhuma porta administrativa e segredos fora do repositório e da imagem.
 
 ## O que uma versão real exigiria
 
@@ -34,5 +34,3 @@ A proposta do produto prevê cidadãos autenticados reportando problemas. Uma ve
 - **Direitos do titular:** canal para acesso, correção e exclusão dos dados, e um encarregado (DPO) indicado.
 - **Segurança e retenção:** banco com criptografia e acesso restrito, prazo de retenção definido para chamados e logs, e mascaramento ou anonimização do IP nos logs quando possível.
 - **Relatório de impacto:** avaliar a necessidade de um relatório de impacto à proteção de dados, já que o produto envolveria localização de moradores.
-
-**Pendente (E8b):** confirmar no Log Analytics de produção que a retenção está em 30 dias e que a região é eastus2. Ambas dependem do E4 aplicado.

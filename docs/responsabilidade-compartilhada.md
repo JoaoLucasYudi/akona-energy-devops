@@ -21,7 +21,7 @@ O Akona Energy roda no Azure Container Apps, um PaaS de containers. A Azure cuid
 
 ## Como a equipe cumpre a sua parte
 
-Os controles abaixo são os definidos no plano. A coluna "Épico" indica onde cada um é construído; em 11/11/2026, só os do E1 estavam prontos.
+Todos os controles abaixo estão em produção. A coluna "Épico" indica onde cada um foi construído, e as evidências estão no relatório em PDF.
 
 | Responsabilidade | Controle | Épico |
 | --- | --- | --- |
@@ -36,5 +36,3 @@ Os controles abaixo são os definidos no plano. A coluna "Épico" indica onde ca
 | Custo | Acompanhamento pelo crédito da Azure for Students e `terraform destroy` após a correção; ver [Custo](custo.md) | E9 |
 
 O GitHub tem um papel parecido com o da Azure para os runners do Actions e o GHCR: cuida da infraestrutura deles. A equipe responde pelo conteúdo do workflow, pelas permissões de cada job, pela fixação das actions de terceiros por SHA e por manter o pacote do GHCR público.
-
-**Pendente (E8b):** os controles de imagem, pipeline, service principal, ingress e monitoramento dependem do E2 ao E6. Confirmar cada linha contra o que foi entregue.
