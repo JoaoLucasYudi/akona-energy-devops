@@ -1,6 +1,6 @@
 # Arquitetura do Akona Energy
 
-> Este documento descreve a arquitetura definida no plano. Em 11/11/2026 só a aplicação (E1) estava pronta; o restante está em construção. Veja "Situação dos componentes" no fim.
+MVP publicado: <https://ca-akona-energy-prod.salmoncoast-770d275b.eastus2.azurecontainerapps.io>
 
 O código só vira imagem no GitHub Container Registry (GHCR) se passar pelos testes e pelos três scanners (Gitleaks, Semgrep e Trivy). O deploy troca a imagem do Container App, que é a única parte exposta ao cidadão, e só por HTTPS.
 
@@ -34,7 +34,7 @@ flowchart LR
 | Componente | Onde roda | Papel |
 | --- | --- | --- |
 | Aplicação MVP | Container App na Azure | FastAPI + Jinja2, sem JavaScript, com dados sintéticos em `app/data/mock.json`. Expõe as páginas, `/health` e `/metrics` na porta 8000 |
-| Repositório | GitHub, público | Código e documentação; o Dockerfile, o workflow e o Terraform entram com o E2, o E3 e o E4 |
+| Repositório | GitHub, público | Código, Dockerfile, workflow, Terraform e documentação |
 | GitHub Actions | Runners do GitHub | Pipeline `devsecops.yml`: qualidade (ruff e pytest), Gitleaks, Semgrep, build, Trivy, push no GHCR e deploy |
 | GHCR | GitHub | Guarda a imagem `ghcr.io/joaolucasyudi/akona-energy-devops`, marcada pelo SHA do commit |
 | Terraform | Máquina da equipe | Cria o resource group, o Log Analytics, o ambiente e o Container App. O state fica local, fora do Git |
@@ -54,15 +54,15 @@ Não há VM, NSG nem IP público de máquina. O Container Apps só expõe o ingr
 
 ## Situação dos componentes
 
-O diagrama descreve a arquitetura definida no plano (`docs/plano-devops.md`). Em 11/11/2026, só a aplicação estava pronta.
+Todos os componentes estão no ar desde 15/11/2026.
 
-| Componente | Épico | Situação em 11/11/2026 |
+| Componente | Épico | Situação |
 | --- | --- | --- |
-| Aplicação MVP | E1 | Pronta na `main` |
-| Dockerfile e docker compose | E2 | Em construção |
-| Workflow DevSecOps e push no GHCR | E3 | Em construção |
-| Terraform (Container App, Log Analytics) | E4 | Em construção |
-| Deploy contínuo | E5 | Em construção |
-| Prometheus, Grafana e alerta | E6 | Em construção |
+| Aplicação MVP | E1 | Publicada na URL acima |
+| Dockerfile e docker compose | E2 | Imagem multi-stage, `USER 10001`; stack local com `docker compose` |
+| Workflow DevSecOps e push no GHCR | E3 | Roda a cada push; imagem pública no GHCR, marcada pelo SHA |
+| Terraform (Container App, Log Analytics) | E4 | Aplicado em eastus2 (resource group `rg-akona-energy-prod`) |
+| Deploy contínuo | E5 | Push na `main` troca a imagem do Container App e confere `/health` |
+| Prometheus, Grafana e alerta | E6 | Locais, raspando `/metrics` da URL pública; alerta disparado em 16/11 |
 
-**Pendente (E8b):** atualizar esta tabela, incluir a URL pública do MVP (FQDN do Container App) e exportar o diagrama como `docs/evidencias/00-arquitetura.png` para o PDF.
+O diagrama também está em PNG, para o relatório: [`docs/evidencias/00-arquitetura.png`](evidencias/00-arquitetura.png).
