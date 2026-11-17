@@ -191,3 +191,13 @@ def test_nenhuma_pagina_usa_javascript_nem_cookie(client):
         assert resposta.status_code == 200, rota
         assert "<script" not in resposta.text.lower(), rota
         assert "set-cookie" not in resposta.headers, rota
+
+
+def test_nenhuma_pagina_carrega_recurso_externo(client):
+    for rota in ("/", "/chamados", "/chamados/novo", "/gestao", "/transparencia", "/privacidade"):
+        html = client.get(rota).text
+        assert not re.search(r'\ssrc="(https?:)?//', html), rota
+        assert not re.search(r'<link[^>]*href="(https?:)?//', html), rota
+    css = client.get("/static/style.css").text
+    assert not re.search(r"url\(\s*['\"]?(https?:)?//", css)
+    assert "@import" not in css

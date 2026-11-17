@@ -3,18 +3,22 @@
 {% from "_painel.html" import filtro_periodo, tabela_bairros %}
 {% block titulo %}Gestão · Akona Energy{% endblock %}
 {% block conteudo %}
-<h1>Painel da gestão</h1>
-{{ filtro_periodo("/gestao", painel, periodos) }}
-
-<div class="indicadores">
-  <div class="indicador"><span>Chamados abertos</span><strong>{{ painel.abertos }}</strong><small>de {{ painel.total }} no período</small></div>
-  <div class="indicador"><span>Tempo médio de reparo</span><strong>{{ painel.tempo_medio_reparo_horas | numero }} h</strong><small>meta: −30% sobre a linha de base</small></div>
-  <div class="indicador"><span>No prazo</span><strong>{{ painel.percentual_no_prazo | numero }}%</strong><small>meta: 85%</small></div>
-  <div class="indicador"><span>Gap de equidade</span><strong>{{ painel.gap_equidade | numero(2) }}</strong><small>bairro mais lento ÷ cidade · meta: abaixo de 1,5</small></div>
-  <div class="indicador"><span>Reincidência</span><strong>{{ painel.percentual_reincidencia | numero }}%</strong><small>mesmo poste em até 30 dias · meta: abaixo de 10%</small></div>
+<div class="cabecalho-pagina">
+  <div>
+    <h1>Painel da gestão</h1>
+    {{ filtro_periodo("/gestao", painel, periodos) }}
+  </div>
 </div>
 
-<div class="rolagem">
+<div class="kpis">
+  <div class="kpi"><span class="kpi-rotulo">Chamados abertos</span><strong class="kpi-valor">{{ painel.abertos }}</strong><small class="kpi-meta">de {{ painel.total }} no período</small></div>
+  <div class="kpi"><span class="kpi-rotulo">Tempo médio de reparo</span><strong class="kpi-valor">{{ painel.tempo_medio_reparo_horas | numero }} h</strong><small class="kpi-meta">meta: −30% sobre a linha de base</small></div>
+  <div class="kpi"><span class="kpi-rotulo">No prazo</span><strong class="kpi-valor">{{ painel.percentual_no_prazo | numero }}%</strong><small class="kpi-meta">meta: 85%</small></div>
+  <div class="kpi"><span class="kpi-rotulo">Gap de equidade</span><strong class="kpi-valor">{{ painel.gap_equidade | numero(2) }}</strong><small class="kpi-meta">bairro mais lento ÷ cidade · meta: abaixo de 1,5</small></div>
+  <div class="kpi"><span class="kpi-rotulo">Reincidência</span><strong class="kpi-valor">{{ painel.percentual_reincidencia | numero }}%</strong><small class="kpi-meta">mesmo poste em até 30 dias · meta: abaixo de 10%</small></div>
+</div>
+
+<div class="tabela">
 <table>
   <caption>Fila de chamados não resolvidos ({{ fila | length }}), do mais recente para o mais antigo</caption>
   <thead>
@@ -35,7 +39,7 @@
       <td>
         <form method="post" action="/gestao/chamados/{{ chamado.id }}/status" class="acao">
           <input type="hidden" name="status" value="{{ proximo_status[chamado.status] }}">
-          <button class="botao" type="submit">{% if chamado.status == "aberto" %}Iniciar{% else %}Resolver{% endif %}</button>
+          <button class="botao botao-secundario botao-pequeno" type="submit">{% if chamado.status == "aberto" %}Iniciar{% else %}Resolver{% endif %}</button>
         </form>
       </td>
     </tr>
@@ -48,6 +52,7 @@
 
 {{ tabela_bairros(painel.por_bairro, "Por bairro, do mais lento para o mais rápido") }}
 
+<div class="tabela">
 <table>
   <caption>Últimas 12 semanas</caption>
   <thead>
@@ -59,6 +64,7 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
 
 <p class="dica">Os mesmos números em JSON: <a href="/api/indicadores?dias={{ painel.dias }}">/api/indicadores?dias={{ painel.dias }}</a>.
 Sem login nesta demonstração: em produção, mudar o status exigiria um perfil autenticado da gestão.</p>
