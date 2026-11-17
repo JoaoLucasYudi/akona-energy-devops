@@ -1,30 +1,127 @@
 {% extends "base.html" %}
+{% from "_icones.html" import icone %}
+{% block titulo %}Akona Energy · Rua escura tem prazo{% endblock %}
+{% block classe_main %}landing{% endblock %}
 {% block conteudo %}
-<section class="destaque">
-  <h1>Iluminação e energia que funcionam para quem mora em Osasco</h1>
-  <p>
-    No Akona Energy, o cidadão reporta problemas de iluminação pública e de energia
-    (poste apagado, lâmpada piscando, fio caído, queda de energia) e a gestão, seja a
-    prefeitura ou a concessionária, acompanha, prioriza e resolve os chamados com dados.
-  </p>
+<section class="hero" aria-labelledby="hero-titulo">
+  <img class="hero-foto" src="/static/img/hero-rua-iluminada.webp" width="1920" height="1440"
+       alt="Rua vazia à noite, com postes de luz acesos entre as árvores">
+  <div class="container hero-conteudo">
+    <p class="sobretitulo">Iluminação pública e energia · Osasco (SP)</p>
+    <h1 id="hero-titulo">Rua escura tem prazo.</h1>
+    <p class="hero-subtitulo">O Akona mede esse prazo.</p>
+    <p class="hero-texto">
+      O morador avisa do poste apagado em segundos, sem cadastro. A prefeitura ou a
+      concessionária recebe o chamado numa fila única, resolve e acompanha o prazo de cada bairro.
+    </p>
+    <div class="acoes">
+      <a class="botao botao-primario botao-grande" href="/chamados/novo">Abrir chamado {{ icone("seta") }}</a>
+      <a class="botao botao-contorno botao-grande" href="/gestao">Ver painel da gestão</a>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Escolha uma área da demonstração</h2>
-  <p>Não há senha: cada link abre uma visão pronta, com dados simulados de bairros de Osasco.</p>
-  <div class="cartoes">
-    <a class="cartao" href="/chamados">
-      <strong>Sou cidadão</strong>
-      <span>Veja os chamados de uma moradora fictícia e abra um novo.</span>
-    </a>
-    <a class="cartao" href="/gestao">
-      <strong>Gestão</strong>
-      <span>Atenda a fila de chamados e veja prazos e tempo de reparo por bairro.</span>
-    </a>
-    <a class="cartao" href="/transparencia">
-      <strong>Transparência</strong>
-      <span>Veja o tempo de reparo e o cumprimento de prazo em cada bairro.</span>
-    </a>
+<section class="secao" aria-labelledby="problema-titulo">
+  <div class="container">
+    <p class="sobretitulo">O problema em números</p>
+    <h2 id="problema-titulo">Uma rua apagada é uma rua menos segura.</h2>
+    <p class="lead">E hoje ninguém consegue dizer quanto tempo ela fica apagada.</p>
+    <div class="grade-3">
+      <article class="cartao cartao-numero">
+        <span class="cartao-icone">{{ icone("lua") }}</span>
+        <p class="numero">−36%</p>
+        <p>Queda de pelo menos 36% nos crimes noturnos em área externa quando as ruas ganharam mais luz, num experimento controlado em Nova York.</p>
+        <p class="fonte">Fonte: <a href="https://www2.nber.org/digest/jul19/w25798.shtml" rel="noopener noreferrer">Chalfin et al., NBER w25798 (2019)</a></p>
+      </article>
+      <article class="cartao cartao-numero">
+        <span class="cartao-icone">{{ icone("lampada-apagada") }}</span>
+        <p class="numero">6,9%</p>
+        <p>Das 6.050 reclamações sobre iluminação no DF entre janeiro e setembro, só 6,9% constavam como resolvidas.</p>
+        <p class="fonte">Fonte: <a href="https://www.metropoles.com/distrito-federal/ceb-resolve-so-69-das-reclamacoes-sobre-iluminacao-precaria-no-df" rel="noopener noreferrer">Metrópoles, dados da Ouvidoria do GDF</a></p>
+      </article>
+      <article class="cartao cartao-numero">
+        <span class="cartao-icone">{{ icone("recibo") }}</span>
+        <p class="numero">COSIP</p>
+        <p>O cidadão paga a iluminação pública na conta de luz mesmo quando a rua está escura.</p>
+        <p class="fonte">Fonte: <a href="https://www.correiobraziliense.com.br/cbradar/iluminacao-publica-prefeitura-omissao-acao-civil-publica/" rel="noopener noreferrer">Correio Braziliense, 29/10/2026</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao-clara" aria-labelledby="como-titulo">
+  <div class="container">
+    <p class="sobretitulo">Como funciona</p>
+    <h2 id="como-titulo">Do poste apagado ao prazo medido, em 3 passos</h2>
+    <ol class="passos">
+      <li class="passo">
+        <span class="passo-icone">{{ icone("qr-code") }}</span>
+        <h3>QR code no poste</h3>
+        <p>O morador aponta o celular para o adesivo no poste. O chamado já sai com o código do ponto de luz, sem pedir nome nem endereço.</p>
+        <a class="link-seta" href="/chamados/novo?ponto=OSC-01234">Ver o exemplo {{ icone("seta") }}</a>
+      </li>
+      <li class="passo">
+        <span class="passo-icone">{{ icone("protocolo") }}</span>
+        <h3>Protocolo na hora</h3>
+        <p>O chamado entra na fila da gestão e o morador recebe um número de protocolo para acompanhar o status.</p>
+      </li>
+      <li class="passo">
+        <span class="passo-icone">{{ icone("relogio") }}</span>
+        <h3>A gestão resolve e o prazo é medido</h3>
+        <p>Cada tipo de problema tem prazo: fio caído em 6 h, queda de energia em 24 h, poste apagado em 48 h e lâmpada piscando em 72 h. O painel mostra quem cumpriu.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="secao" aria-labelledby="quem-titulo">
+  <div class="container">
+    <p class="sobretitulo">Para quem</p>
+    <h2 id="quem-titulo">Cada chamado vira prazo medido, por bairro</h2>
+    <div class="grade-3">
+      <a class="cartao cartao-foto" href="/chamados">
+        <img src="/static/img/rua-lampioes.webp" width="1200" height="800" loading="lazy"
+             alt="Rua com neblina à noite, iluminada por poucos postes">
+        <div class="cartao-corpo">
+          <h3>{{ icone("usuario") }} Cidadão</h3>
+          <p>Abre um chamado em segundos, sem cadastro, e acompanha o status pelo protocolo.</p>
+          <span class="link-seta">Meus chamados {{ icone("seta") }}</span>
+        </div>
+      </a>
+      <a class="cartao cartao-foto" href="/gestao">
+        <img src="/static/img/tecnicos-cesto.webp" width="1200" height="800" loading="lazy"
+             alt="Dois eletricistas de capacete trabalhando num poste, um deles no cesto de um caminhão">
+        <div class="cartao-corpo">
+          <h3>{{ icone("predio") }} Gestor</h3>
+          <p>Prefeitura ou concessionária: fila única de chamados, prazo por tipo de problema e um painel que mostra onde a cidade está mais atrasada.</p>
+          <span class="link-seta">Painel da gestão {{ icone("seta") }}</span>
+        </div>
+      </a>
+      <a class="cartao cartao-foto" href="/transparencia">
+        <img src="/static/img/poste-led.webp" width="1200" height="800" loading="lazy"
+             alt="Poste com duas luminárias acesas contra o céu cinza">
+        <div class="cartao-corpo">
+          <h3>{{ icone("olho") }} Fiscalização e transparência</h3>
+          <p>Indicadores públicos de prazo por bairro, que mostram se o serviço pago pela COSIP está sendo entregue.</p>
+          <span class="link-seta">Transparência {{ icone("seta") }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="faixa-cta" aria-labelledby="cta-titulo">
+  <img class="faixa-foto" src="/static/img/sao-paulo-noite.webp" width="1200" height="800" loading="lazy" alt="">
+  <div class="container faixa-conteudo">
+    <h2 id="cta-titulo">Leve o Akona para a sua cidade</h2>
+    <p>
+      Um piloto de 12 meses por CPSI, o contrato do Marco Legal das Startups para testar soluções
+      inovadoras no poder público. O critério de sucesso é público: tempo de reparo 30% menor e 85%
+      dos chamados no prazo.
+    </p>
+    <div class="acoes">
+      <a class="botao botao-primario botao-grande" href="/gestao">Ver painel da gestão {{ icone("seta") }}</a>
+    </div>
   </div>
 </section>
 {% endblock %}

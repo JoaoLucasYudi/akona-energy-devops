@@ -7,6 +7,7 @@
 <p class="alerta sucesso" role="status">Chamado registrado. Guarde o protocolo <strong>#{{ chamado.id }}</strong> para acompanhar.</p>
 {% endif %}
 <h1>Protocolo #{{ chamado.id }}</h1>
+<div class="cartao">
 <dl class="detalhe">
   <dt>Tipo</dt><dd>{{ chamado.tipo }}</dd>
   <dt>Bairro</dt><dd>{{ chamado.bairro }}</dd>
@@ -17,4 +18,5 @@
   <dt>Aberto em</dt><dd>{{ chamado.aberto_em | data_hora }}</dd>
   <dt>Resolvido em</dt><dd>{{ chamado.resolvido_em | data_hora }}</dd>
 </dl>
+</div>
 {% endblock %}

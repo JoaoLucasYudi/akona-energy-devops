@@ -162,3 +162,21 @@ scripts/gerar_pdf.sh
 O PDF sai em `docs/relatorio/relatorio.pdf`. Os prints de evidência ficam fora do Git; o script os procura em `~/Documents/prints-gs-devops-4nao/`, ou na pasta informada em `PRINTS`. Fora do macOS, informe o caminho do Chrome em `CHROME`.
 
 O diagrama de arquitetura entra no PDF como `docs/evidencias/00-arquitetura.png`, exportado do Mermaid de `docs/arquitetura.md` com o [mermaid-cli](https://github.com/mermaid-js/mermaid-cli).
+
+## Créditos de imagens, fonte e ícones
+
+O site não carrega nenhum recurso externo: fotos, fonte e ícones ficam em `app/static/` ou no próprio HTML.
+
+| Arquivo em `app/static/img/` | Onde aparece | Autor | Foto original | Licença |
+| --- | --- | --- | --- | --- |
+| `hero-rua-iluminada.webp` | Topo da página inicial (espelhada no CSS) | Fawazlul Rizqi | <https://unsplash.com/photos/8I-gdwRMw_M> | [Unsplash License](https://unsplash.com/license) |
+| `rua-lampioes.webp` | Cartão "Cidadão" | Zoltan Tasi | <https://unsplash.com/photos/MzVIlXk0AJg> | [Unsplash License](https://unsplash.com/license) |
+| `tecnicos-cesto.webp` | Cartão "Gestor" | Mario Spencer | <https://unsplash.com/photos/UyqxlMS8X84> | [Unsplash License](https://unsplash.com/license) |
+| `poste-led.webp` | Cartão "Fiscalização e transparência" | Sara Mobasheri | <https://unsplash.com/photos/XaOJLeMGgvM> | [Unsplash License](https://unsplash.com/license) |
+| `sao-paulo-noite.webp` | Faixa "Leve o Akona para a sua cidade" | Daniel Esteves | <https://unsplash.com/photos/u2rwF2C3wgo> | [Unsplash License](https://unsplash.com/license) |
+
+As fotos foram recortadas, redimensionadas e convertidas para WebP.
+
+- **Fonte:** [Plus Jakarta Sans](https://github.com/tokotype/PlusJakartaSans), © 2020 The Plus Jakarta Sans Project Authors, sob a SIL Open Font License 1.1 (texto em `app/static/fonts/OFL.txt`). O arquivo `woff2` (subconjunto latino, peso variável) vem do pacote [`@fontsource-variable/plus-jakarta-sans`](https://fontsource.org/fonts/plus-jakarta-sans) 5.2.8.
+- **Ícones:** [Lucide](https://lucide.dev) 0.460.0, licença ISC (© Lucide Contributors; partes © Cole Bemis, do Feather, licença MIT), copiados como SVG inline em `app/templates/_icones.html`.
+- **Logo:** desenho próprio em SVG, no mesmo arquivo.
