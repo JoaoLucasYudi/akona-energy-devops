@@ -1,42 +1,65 @@
 {% extends "base.html" %}
 {% from "_status.html" import selo %}
+{% from "_painel.html" import filtro_periodo, tabela_bairros %}
 {% block titulo %}Gestão · Akona Energy{% endblock %}
 {% block conteudo %}
 <h1>Painel da gestão</h1>
-<p>{{ chamados | length }} chamados registrados em Osasco.</p>
+{{ filtro_periodo("/gestao", painel, periodos) }}
 
-<div class="contagens">
-  {% for titulo, linhas in contagens %}
-  <table>
-    <caption>{{ titulo }}</caption>
-    <tbody>
-      {% for rotulo, total in linhas %}
-      <tr><th scope="row">{{ rotulo }}</th><td>{{ total }}</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endfor %}
+<div class="indicadores">
+  <div class="indicador"><span>Chamados abertos</span><strong>{{ painel.abertos }}</strong><small>de {{ painel.total }} no período</small></div>
+  <div class="indicador"><span>Tempo médio de reparo</span><strong>{{ painel.tempo_medio_reparo_horas | numero }} h</strong><small>meta: −30% sobre a linha de base</small></div>
+  <div class="indicador"><span>No prazo</span><strong>{{ painel.percentual_no_prazo | numero }}%</strong><small>meta: 85%</small></div>
+  <div class="indicador"><span>Gap de equidade</span><strong>{{ painel.gap_equidade | numero(2) }}</strong><small>bairro mais lento ÷ cidade · meta: abaixo de 1,5</small></div>
+  <div class="indicador"><span>Reincidência</span><strong>{{ painel.percentual_reincidencia | numero }}%</strong><small>mesmo poste em até 30 dias · meta: abaixo de 10%</small></div>
 </div>
 
+<div class="rolagem">
 <table>
-  <caption>Todos os chamados</caption>
+  <caption>Fila de chamados não resolvidos ({{ fila | length }}), do mais recente para o mais antigo</caption>
   <thead>
     <tr>
-      <th scope="col">Nº</th><th scope="col">Tipo</th><th scope="col">Bairro</th>
-      <th scope="col">Status</th><th scope="col">Prioridade</th><th scope="col">Aberto em</th>
+      <th scope="col">Protocolo</th><th scope="col">Tipo</th><th scope="col">Bairro</th>
+      <th scope="col">Ponto</th><th scope="col">Aberto em</th><th scope="col">Status</th><th scope="col">Ação</th>
     </tr>
   </thead>
   <tbody>
-    {% for chamado in chamados %}
+    {% for chamado in fila %}
     <tr>
       <td>#{{ chamado.id }}</td>
       <td>{{ chamado.tipo }}</td>
       <td>{{ chamado.bairro }}</td>
+      <td>{{ chamado.ponto_referencia }}</td>
+      <td>{{ chamado.aberto_em | data_hora }}</td>
       <td>{{ selo(chamado.status) }}</td>
-      <td>{{ chamado.prioridade }}</td>
-      <td>{{ chamado.data_abertura }}</td>
+      <td>
+        <form method="post" action="/gestao/chamados/{{ chamado.id }}/status" class="acao">
+          <input type="hidden" name="status" value="{{ proximo_status[chamado.status] }}">
+          <button class="botao" type="submit">{% if chamado.status == "aberto" %}Iniciar{% else %}Resolver{% endif %}</button>
+        </form>
+      </td>
     </tr>
+    {% else %}
+    <tr><td colspan="7">Nenhum chamado na fila.</td></tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
+
+{{ tabela_bairros(painel.por_bairro, "Por bairro, do mais lento para o mais rápido") }}
+
+<table>
+  <caption>Últimas 12 semanas</caption>
+  <thead>
+    <tr><th scope="col">Semana a partir de</th><th scope="col">Abertos</th><th scope="col">Resolvidos</th></tr>
+  </thead>
+  <tbody>
+    {% for semana in painel.semanal %}
+    <tr><th scope="row">{{ semana.inicio }}</th><td>{{ semana.abertos }}</td><td>{{ semana.resolvidos }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="dica">Os mesmos números em JSON: <a href="/api/indicadores?dias={{ painel.dias }}">/api/indicadores?dias={{ painel.dias }}</a>.
+Sem login nesta demonstração: em produção, mudar o status exigiria um perfil autenticado da gestão.</p>
 {% endblock %}

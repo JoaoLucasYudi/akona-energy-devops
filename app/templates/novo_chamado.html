@@ -3,20 +3,28 @@
 {% block conteudo %}
 <p><a href="/chamados">← Voltar para meus chamados</a></p>
 <h1>Abrir novo chamado</h1>
-<p class="alerta" role="note">
-  Formulário ilustrativo: esta demonstração não grava dados. O botão de envio fica desativado.
-</p>
-<form>
+{% if erro %}<p class="alerta erro" role="alert">{{ erro }}</p>{% endif %}
+<form method="post" action="/chamados/novo">
   <label for="tipo">Tipo de problema</label>
-  <select id="tipo" name="tipo">
+  <select id="tipo" name="tipo" required>
     {% for tipo in tipos %}
-    <option>{{ tipo }}</option>
+    <option{% if valores.tipo == tipo %} selected{% endif %}>{{ tipo }}</option>
     {% endfor %}
   </select>
 
-  <label for="descricao">Descrição</label>
-  <textarea id="descricao" name="descricao" rows="4" placeholder="Ex.: poste em frente à praça está apagado desde ontem."></textarea>
+  <label for="bairro">Bairro</label>
+  <select id="bairro" name="bairro" required>
+    {% for bairro in bairros %}
+    <option{% if valores.bairro == bairro %} selected{% endif %}>{{ bairro }}</option>
+    {% endfor %}
+  </select>
 
-  <p><button class="botao" type="submit" disabled>Enviar chamado</button></p>
+  <label for="ponto">Código do poste ou ponto de referência</label>
+  <input id="ponto" name="ponto" type="text" required maxlength="{{ ponto_max }}"
+         value="{{ valores.ponto or '' }}" placeholder="Ex.: OSC-01234 ou em frente à praça"
+         aria-describedby="ponto-aviso">
+  <p id="ponto-aviso" class="dica">Não informe nome, telefone ou endereço.</p>
+
+  <p><button class="botao" type="submit">Enviar chamado</button></p>
 </form>
 {% endblock %}

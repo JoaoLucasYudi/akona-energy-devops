@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "_painel.html" import filtro_periodo, tabela_bairros %}
+{% block titulo %}Transparência · Akona Energy{% endblock %}
+{% block conteudo %}
+<h1>Transparência da iluminação pública em Osasco</h1>
+<p>Quanto tempo cada bairro espera pelo reparo e quantos chamados são resolvidos dentro do prazo.
+A iluminação é paga por todos na conta de luz (COSIP), e estes números mostram se o serviço está sendo entregue.</p>
+{{ filtro_periodo("/transparencia", painel, periodos) }}
+
+<div class="indicadores">
+  <div class="indicador"><span>Tempo médio de reparo na cidade</span><strong>{{ painel.tempo_medio_reparo_horas | numero }} h</strong></div>
+  <div class="indicador"><span>Chamados resolvidos no prazo</span><strong>{{ painel.percentual_no_prazo | numero }}%</strong></div>
+</div>
+
+{{ tabela_bairros(painel.por_bairro, "Por bairro, do mais lento para o mais rápido") }}
+
+<p class="dica">Prazos por tipo: fio caído 6 h, queda de energia 24 h, poste apagado 48 h e lâmpada piscando 72 h.
+Nenhum chamado ou pessoa é identificado nesta página.</p>
+{% endblock %}
