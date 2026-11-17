@@ -4,7 +4,7 @@ O MVP do Akona Energy não coleta dados pessoais. Os únicos dados potencialment
 
 ## Dados da aplicação
 
-- Os chamados históricos vêm de `app/data/mock.json`, gerado por `scripts/gerar_mock.py` com dados simulados e versionado no repositório. A única cidadã, usada na área "Meus chamados", tem nome claramente fictício ("Ana Fictícia da Silva").
+- Os chamados históricos vêm de `app/data/mock.json`, gerado por `scripts/gerar_mock.py` com dados simulados e versionado no repositório. A única cidadã, usada na área "Sou cidadão", tem nome claramente fictício ("Ana Fictícia da Silva").
 - O mock não tem CPF, e-mail, telefone nem endereço exato, só o bairro de Osasco e um código de poste.
 - O formulário de novo chamado grava só o tipo de problema, o bairro (escolhidos numa lista) e o código do poste ou um ponto de referência de até 120 caracteres. A tela pede para não informar nome, telefone ou endereço. Não há campo de texto longo.
 - Esses chamados ficam só na memória do processo: não há banco, disco nem log com o conteúdo, e tudo se perde quando o container reinicia. Eles aparecem em `/gestao` e `/api/chamados`, que são públicos nesta demonstração.

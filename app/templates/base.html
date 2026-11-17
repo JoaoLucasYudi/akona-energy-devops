@@ -1,64 +1,27 @@
-{% from "_icones.html" import icone, logo %}
-{% macro links_principais() -%}
-{% set caminho = request.url.path %}
-<a href="/"{% if caminho == "/" %} aria-current="page"{% endif %}>Início</a>
-<a href="/chamados"{% if caminho == "/chamados" %} aria-current="page"{% endif %}>Meus chamados</a>
-<a href="/gestao"{% if caminho == "/gestao" %} aria-current="page"{% endif %}>Gestão</a>
-<a href="/transparencia"{% if caminho == "/transparencia" %} aria-current="page"{% endif %}>Transparência</a>
-{%- endmacro %}
 <!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block titulo %}Akona Energy{% endblock %}</title>
-  <link rel="preload" href="/static/fonts/plus-jakarta-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <header class="topo">
-    <div class="topo-interno">
-      <div class="marca-bloco">
-        <a class="marca" href="/">{{ logo() }}<span>Akona Energy</span></a>
-        <span class="etiqueta-demo">demonstração · dados simulados</span>
-      </div>
-      <nav class="nav-principal" aria-label="Principal">
-        {{ links_principais() }}
-        <a class="botao botao-primario" href="/chamados/novo">Abrir chamado</a>
-      </nav>
-      <details class="menu-celular">
-        <summary aria-label="Menu">{{ icone("menu", "icone icone-abrir") }}{{ icone("x", "icone icone-fechar") }}</summary>
-        <nav aria-label="Principal no celular">
-          {{ links_principais() }}
-          <a class="botao botao-primario" href="/chamados/novo">Abrir chamado</a>
-        </nav>
-      </details>
-    </div>
+    <a class="marca" href="/">Akona Energy</a>
+    <nav aria-label="Principal">
+      <a href="/chamados">Sou cidadão</a>
+      <a href="/gestao">Gestão</a>
+      <a href="/transparencia">Transparência</a>
+      <a href="/privacidade">Privacidade</a>
+    </nav>
   </header>
-  <main id="conteudo" class="{% block classe_main %}pagina{% endblock %}">
+  <p class="aviso-demo">Demonstração com dados simulados. Chamados novos ficam só na memória do servidor e somem quando ele reinicia.</p>
+  <main>
     {% block conteudo %}{% endblock %}
   </main>
   <footer class="rodape">
-    <div class="rodape-interno">
-      <div class="rodape-marca">
-        <a class="marca" href="/">{{ logo() }}<span>Akona Energy</span></a>
-        <p>Chamados de iluminação pública e energia com prazo medido, por bairro. Osasco (SP).</p>
-      </div>
-      <nav class="rodape-links" aria-label="Rodapé">
-        <a href="/chamados/novo">Abrir chamado</a>
-        <a href="/chamados">Meus chamados</a>
-        <a href="/gestao">Gestão</a>
-        <a href="/transparencia">Transparência</a>
-        <a href="/privacidade">Privacidade</a>
-      </nav>
-      <ul class="ods" aria-label="Objetivos de Desenvolvimento Sustentável conectados">
-        <li><strong>ODS 11</strong> Cidades e comunidades sustentáveis</li>
-        <li><strong>ODS 10</strong> Redução das desigualdades</li>
-        <li><strong>ODS 7</strong> Energia limpa e acessível</li>
-      </ul>
-    </div>
-    <p class="rodape-aviso">Ambiente de demonstração · dados simulados</p>
+    <p>Akona Energy · MVP de demonstração · Osasco (SP)</p>
   </footer>
 </body>
 </html>
