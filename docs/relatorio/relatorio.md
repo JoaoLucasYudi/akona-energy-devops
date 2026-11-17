@@ -183,7 +183,7 @@ Cada responsabilidade da equipe tem um controle: Trivy e `USER 10001` na imagem,
 
 ## LGPD
 
-O MVP não coleta nem armazena dados pessoais. Os cidadãos e chamados vêm de um mock sintético versionado, com nomes claramente fictícios e sem CPF, e-mail, telefone ou endereço exato. Não há banco, cadastro, login, cookie nem sessão, e o formulário de novo chamado não grava nada.
+O MVP não coleta dados pessoais. Os chamados históricos são simulados e versionados, a única cidadã tem nome claramente fictício e não há CPF, e-mail, telefone ou endereço exato. Não há banco, cadastro, login, cookie nem sessão. O formulário de novo chamado grava só tipo, bairro e código do poste ou ponto de referência curto, na memória do processo, e esses chamados se perdem quando o container reinicia.
 
 | Dado | Onde fica | Retenção | Dado pessoal? |
 | --- | --- | --- | --- |
@@ -222,4 +222,4 @@ Alguns pontos exigiram ajuste durante o caminho:
 - **Drift do Terraform:** a Azure cria o ambiente com o perfil de workload Consumption, e o primeiro `plan` depois do apply queria removê-lo. O perfil passou a ser declarado no código. O Terraform também ignora mudanças na imagem, porque quem troca a imagem é o pipeline.
 - **Execução barrada isolada:** a rota insegura da demonstração também era acusada pelo Ruff. Para a execução vermelha mostrar só o Semgrep, a linha recebeu `# noqa: S602`, e o commit nunca chegou à `main`.
 
-Limitações conscientes desta versão: o state do Terraform é local (um time maior usaria um backend remoto com lock), há uma única réplica sem alta disponibilidade, Prometheus e Grafana rodam na máquina da equipe e não na nuvem, e o MVP é somente leitura. Os próximos passos naturais são autenticação, banco de dados com os chamados reais, migração para brazilsouth por causa da LGPD e observabilidade gerenciada na própria Azure.
+Limitações conscientes desta versão: o state do Terraform é local (um time maior usaria um backend remoto com lock), há uma única réplica sem alta disponibilidade, Prometheus e Grafana rodam na máquina da equipe e não na nuvem, e os chamados novos ficam só em memória, sem login para a gestão. Os próximos passos naturais são autenticação, banco de dados com os chamados reais, migração para brazilsouth por causa da LGPD e observabilidade gerenciada na própria Azure.

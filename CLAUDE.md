@@ -4,7 +4,7 @@ Entrega da disciplina Secure DevOps Tools & Cloud Computing (FIAP), prazo 19/11/
 
 ## Decisões fixas (não mudar sem pedir)
 
-- App: Python 3.12 + FastAPI + Jinja2, sem JavaScript, dados mockados em `app/data/mock.json`, sem banco, sem autenticação e sem formulário que grava.
+- App: Python 3.12 + FastAPI + Jinja2, sem JavaScript, dados simulados em `app/data/mock.json` (gerados por `scripts/gerar_mock.py`), sem banco e sem autenticação. Chamados novos e troca de status ficam em memória do processo (por isso 1 réplica).
 - Contrato da plataforma: porta 8000; `/health` (200); `/metrics` (Prometheus, sem auth); `/simular-erro` atrás de `ENABLE_ERROR_SIMULATION`.
 - Container: multi-stage `python:3.12-slim`, `USER 10001`, nenhum segredo na imagem.
 - Nuvem: Azure, eastus2, Container Apps consumption, 1 réplica (min = max = 1). Sem VM, sem SSH.
