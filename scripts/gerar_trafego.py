@@ -12,7 +12,15 @@ import urllib.request
 from collections import Counter
 from urllib.parse import urlparse
 
-ROTAS_NORMAIS = ["/", "/chamados", "/gestao", "/api/chamados", "/api/chamados/101"]
+ROTAS_NORMAIS = [
+    "/",
+    "/chamados",
+    "/gestao",
+    "/transparencia",
+    "/api/chamados",
+    "/api/chamados/1001",
+    "/api/indicadores",
+]
 ROTA_ERRO = "/simular-erro"
 
 

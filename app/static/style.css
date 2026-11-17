@@ -94,12 +94,6 @@ th, td { padding: 0.5rem; border-bottom: 1px solid var(--borda); text-align: lef
 .status-em-andamento { background: #fff1c2; }
 .status-resolvido { background: #d9f2df; }
 
-.contagens {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
 dl.detalhe { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 1rem; }
 dl.detalhe dt { font-weight: 600; }
 dl.detalhe dd { margin: 0; }
@@ -114,3 +108,43 @@ form select, form textarea { width: 100%; max-width: 480px; padding: 0.4rem; fon
 }
 
 .rodape { text-align: center; color: var(--suave); font-size: 0.85rem; padding: 2rem 1rem; }
+
+form input[type="text"] { width: 100%; max-width: 480px; padding: 0.4rem; font: inherit; }
+form.acao { margin: 0; }
+.dica { color: var(--suave); font-size: 0.9rem; }
+.alerta.erro { background: #fde2e1; border-left-color: #c0392b; }
+.alerta.sucesso { background: #d9f2df; border-left-color: #2e8b57; }
+.periodo { color: var(--suave); }
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.indicador {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+}
+.indicador span { color: var(--suave); font-size: 0.9rem; }
+.indicador strong { font-size: 1.75rem; }
+.indicador small { color: var(--suave); }
+
+.barra {
+  display: inline-block;
+  width: 120px;
+  height: 0.75rem;
+  margin-right: 0.5rem;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.barra span { display: block; height: 100%; background: var(--marca); }
+
+.rolagem { overflow-x: auto; }

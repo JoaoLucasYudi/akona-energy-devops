@@ -1,7 +1,15 @@
 import pytest
 from fastapi.testclient import TestClient
 
+from app import dados
 from app.main import app
+
+
+@pytest.fixture(autouse=True)
+def dados_do_mock():
+    dados.reiniciar()
+    yield
+    dados.reiniciar()
 
 
 @pytest.fixture

@@ -41,3 +41,20 @@ def test_simular_erro_com_flag_desligada_retorna_404(client):
 
 def test_simular_erro_com_flag_ligada_retorna_500(client_com_simulacao):
     assert client_com_simulacao.get("/simular-erro").status_code == 500
+
+
+def test_metrics_conta_chamados_criados_e_resolvidos_por_tipo(client):
+    def valor(nome):
+        linha = f'{nome}{{tipo="fio caído"}} '
+        corpo = client.get("/metrics").text
+        return float(next(x for x in corpo.splitlines() if x.startswith(linha)).split()[-1])
+
+    criados = valor("akona_chamados_criados_total")
+    resolvidos = valor("akona_chamados_resolvidos_total")
+    client.post(
+        "/chamados/novo", data={"tipo": "fio caído", "bairro": "Centro", "ponto": "OSC-01001"}
+    )
+    client.post("/gestao/chamados/1301/status", data={"status": "em andamento"})
+    client.post("/gestao/chamados/1301/status", data={"status": "resolvido"})
+    assert valor("akona_chamados_criados_total") == criados + 1
+    assert valor("akona_chamados_resolvidos_total") == resolvidos + 1

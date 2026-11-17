@@ -1,0 +1,32 @@
+{% macro filtro_periodo(base, painel, periodos) %}
+<p class="periodo">Período:
+  {% for dias in periodos %}
+  {% if painel.dias == dias %}<strong>últimos {{ dias }} dias</strong>{% else %}<a href="{{ base }}?dias={{ dias }}">últimos {{ dias }} dias</a>{% endif %}{% if not loop.last %} · {% endif %}
+  {% endfor %}
+</p>
+{% endmacro %}
+
+{% macro tabela_bairros(linhas, legenda) %}
+<table class="bairros">
+  <caption>{{ legenda }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Bairro</th><th scope="col">Chamados</th><th scope="col">Tempo médio de reparo</th>
+      <th scope="col">No prazo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for linha in linhas %}
+    <tr>
+      <th scope="row">{{ linha.bairro }}</th>
+      <td>{{ linha.chamados }}</td>
+      <td>
+        <span class="barra"><span style="width: {{ linha.barra_percentual }}%"></span></span>
+        {{ linha.tempo_medio_horas | numero }} h
+      </td>
+      <td>{{ linha.percentual_no_prazo | numero }}%</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}

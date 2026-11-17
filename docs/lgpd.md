@@ -1,22 +1,24 @@
 # LGPD: onde ficam os dados pessoais
 
-O MVP do Akona Energy não coleta nem armazena dados pessoais. Os únicos dados potencialmente pessoais são os endereços IP de quem acessa a URL pública. Eles ficam nos logs enviados ao Log Analytics, na região eastus2, por 30 dias (`retention_in_days = 30` no Terraform aplicado).
+O MVP do Akona Energy não coleta dados pessoais. Os únicos dados potencialmente pessoais são os endereços IP de quem acessa a URL pública. Eles ficam nos logs enviados ao Log Analytics, na região eastus2, por 30 dias (`retention_in_days = 30` no Terraform aplicado).
 
 ## Dados da aplicação
 
-- Todos os cidadãos e chamados vêm de `app/data/mock.json`, um arquivo sintético escrito à mão e versionado no repositório. Os nomes são claramente fictícios (por exemplo, "Ana Fictícia da Silva").
-- O mock não tem CPF, e-mail, telefone nem endereço exato, só o bairro de Osasco.
-- Não há banco de dados, cadastro, login, cookie nem sessão.
-- O formulário de novo chamado é ilustrativo: não envia nem grava nada, e avisa isso na tela.
+- Os chamados históricos vêm de `app/data/mock.json`, gerado por `scripts/gerar_mock.py` com dados simulados e versionado no repositório. A única cidadã, usada na área "Sou cidadão", tem nome claramente fictício ("Ana Fictícia da Silva").
+- O mock não tem CPF, e-mail, telefone nem endereço exato, só o bairro de Osasco e um código de poste.
+- O formulário de novo chamado grava só o tipo de problema, o bairro (escolhidos numa lista) e o código do poste ou um ponto de referência de até 120 caracteres. A tela pede para não informar nome, telefone ou endereço. Não há campo de texto longo.
+- Esses chamados ficam só na memória do processo: não há banco, disco nem log com o conteúdo, e tudo se perde quando o container reinicia. Eles aparecem em `/gestao` e `/api/chamados`, que são públicos nesta demonstração.
+- Não há cadastro, login, cookie nem sessão.
 - A página `/privacidade` explica isso ao visitante.
 
 ## Dados técnicos
 
 | Dado | Onde fica | Retenção | Contém dado pessoal? |
 | --- | --- | --- | --- |
-| Métricas em `/metrics` | Memória do container e Prometheus local | Enquanto o container ou o Prometheus local estiverem de pé | Não. Só contadores técnicos (requisições, latência, status, CPU, memória), sem IP, nome ou identificador de usuário |
+| Métricas em `/metrics` | Memória do container e Prometheus local | Enquanto o container ou o Prometheus local estiverem de pé | Não. Só contadores técnicos (requisições, latência, status, CPU, memória) e de chamados criados e resolvidos por tipo, sem IP, nome ou identificador de usuário |
 | Logs do Container App | Log Analytics, eastus2 | 30 dias | Sim, potencialmente: o IP do cliente pode aparecer nos logs de acesso do servidor e nos logs da plataforma |
-| Imagem do container | GHCR | Até ser apagada | Não. A imagem só tem código e dados sintéticos |
+| Chamados novos | Memória do container | Até o container reiniciar | Não deveria: a tela pede para não informar dado pessoal no ponto de referência, mas o texto é livre e curto |
+| Imagem do container | GHCR | Até ser apagada | Não. A imagem só tem código e dados simulados |
 
 ## Princípios aplicados
 

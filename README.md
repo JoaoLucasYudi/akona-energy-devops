@@ -9,15 +9,15 @@ MVP do Akona Energy publicado com uma esteira DevSecOps, entregue na disciplina 
 | Nome do produto | Akona Energy |
 | Cidadão e território | Moradores de Osasco (SP) que dependem de iluminação pública e da rede de distribuição de energia, atendidos pela prefeitura ou pela concessionária local |
 | Problema em uma frase | Problemas de iluminação e energia (poste apagado, lâmpada piscando, fio caído, queda de energia) demoram a chegar a quem resolve e não viram dados para priorizar o atendimento |
-| Proposta de valor | Um webapp em que cidadãos reportam esses problemas e a gestão (prefeitura ou concessionária) acompanha, prioriza e resolve os chamados com dados. Este MVP é uma demonstração somente leitura dessa proposta |
+| Proposta de valor | Um webapp em que cidadãos reportam esses problemas sem cadastro e a gestão (prefeitura ou concessionária) acompanha, prioriza e resolve os chamados com dados. No MVP, o cidadão abre um chamado e recebe o protocolo, a gestão inicia e resolve o chamado, e os indicadores mudam na tela. Modelo de negócio e go-to-market em [negocio.md](docs/negocio.md) |
 | Componentes da arquitetura | Aplicação FastAPI + Jinja2 em container, imagem no GitHub Container Registry, Azure Container Apps (eastus2) criado por Terraform, Log Analytics, pipeline GitHub Actions com Gitleaks, Semgrep e Trivy, e Prometheus + Grafana locais. Ver [arquitetura](docs/arquitetura.md) |
-| Fontes de dados | Mock sintético versionado no repositório (`app/data/mock.json`), com cidadãos fictícios e chamados de bairros de Osasco |
+| Fontes de dados | Dados simulados: 300 chamados dos últimos 90 dias em 12 bairros de Osasco, gerados por `scripts/gerar_mock.py` com seed fixa e versionados em `app/data/mock.json`. O cenário faz bairros periféricos demorarem mais no reparo. Chamados novos ficam só na memória do processo (uma réplica) e se perdem quando o container reinicia |
 | Modelos de IA utilizados | Nenhum nesta versão |
 | URL do MVP e repositório | MVP: <https://ca-akona-energy-prod.salmoncoast-770d275b.eastus2.azurecontainerapps.io>. Repositório: <https://github.com/JoaoLucasYudi/akona-energy-devops> |
-| Indicadores de impacto | Tempo médio de resolução de chamado, percentual de chamados resolvidos no prazo e número de chamados por bairro. São metas do produto, propostas e não medidas, porque os dados do MVP são sintéticos |
-| ODS conectados | ODS 7 (energia limpa e acessível) e ODS 11 (cidades e comunidades sustentáveis) |
+| Indicadores de impacto | Tempo médio de reparo, % de chamados no prazo, gap de equidade (bairro mais lento ÷ cidade) e reincidência no mesmo poste em 30 dias, calculados em `app/indicadores.py` e mostrados em `/gestao`, `/transparencia` e `/api/indicadores`. Hoje são medidos sobre dados simulados; as metas do piloto estão em [negocio.md](docs/negocio.md) |
+| ODS conectados | ODS 11 (cidades e comunidades sustentáveis), ODS 10 (redução das desigualdades) e ODS 7 (energia limpa e acessível) |
 
-Autenticação, banco de dados e gravação de chamados fazem parte do produto, mas ficaram fora desta entrega.
+Autenticação e banco de dados fazem parte do produto, mas ficaram fora desta entrega. Por isso a troca de status em `/gestao` não pede login (em produção seria um perfil autenticado) e os chamados novos não sobrevivem a um reinício do container.
 
 ## Integrantes
 

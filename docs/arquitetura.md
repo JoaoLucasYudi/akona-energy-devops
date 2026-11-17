@@ -33,7 +33,7 @@ flowchart LR
 
 | Componente | Onde roda | Papel |
 | --- | --- | --- |
-| Aplicação MVP | Container App na Azure | FastAPI + Jinja2, sem JavaScript, com dados sintéticos em `app/data/mock.json`. Expõe as páginas, `/health` e `/metrics` na porta 8000 |
+| Aplicação MVP | Container App na Azure | FastAPI + Jinja2, sem JavaScript, com dados simulados em `app/data/mock.json` e chamados novos em memória (uma réplica). Expõe as páginas, `/health` e `/metrics` na porta 8000 |
 | Repositório | GitHub, público | Código, Dockerfile, workflow, Terraform e documentação |
 | GitHub Actions | Runners do GitHub | Pipeline `devsecops.yml`: qualidade (ruff e pytest), Gitleaks, Semgrep, build, Trivy, push no GHCR e deploy |
 | GHCR | GitHub | Guarda a imagem `ghcr.io/joaolucasyudi/akona-energy-devops`, marcada pelo SHA do commit |
