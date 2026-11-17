@@ -4,7 +4,7 @@
 <p><a href="/chamados">← Voltar para meus chamados</a></p>
 <h1>Abrir novo chamado</h1>
 {% if erro %}<p class="alerta erro" role="alert">{{ erro }}</p>{% endif %}
-<form method="post" action="/chamados/novo" class="cartao formulario">
+<form method="post" action="/chamados/novo">
   <label for="tipo">Tipo de problema</label>
   <select id="tipo" name="tipo" required>
     {% for tipo in tipos %}
@@ -25,6 +25,6 @@
          aria-describedby="ponto-aviso">
   <p id="ponto-aviso" class="dica">Não informe nome, telefone ou endereço.</p>
 
-  <p><button class="botao botao-primario botao-grande" type="submit">Enviar chamado</button></p>
+  <p><button class="botao" type="submit">Enviar chamado</button></p>
 </form>
 {% endblock %}
