@@ -130,6 +130,31 @@
           "legendFormat": "em andamento"
         }
       ]
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Negócio: chamados criados e resolvidos desde o início do container",
+      "gridPos": { "x": 0, "y": 18, "w": 24, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "min": 0, "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "sum(akona_chamados_criados_total{job=\"$job\"})",
+          "legendFormat": "criados"
+        },
+        {
+          "refId": "B",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "sum(akona_chamados_resolvidos_total{job=\"$job\"})",
+          "legendFormat": "resolvidos"
+        }
+      ]
     }
   ]
 }
