@@ -1,0 +1,15 @@
+{# Símbolo do manual de identidade: pico ascendente sobre a linha do horizonte. #}
+{% macro simbolo(tamanho=32, negativo=false) -%}
+<svg class="simbolo" width="{{ tamanho }}" height="{{ tamanho }}" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <rect width="64" height="64" rx="14" fill="{{ '#FFFFFF' if negativo else '#0F3D2E' }}"/>
+  <path d="M17 44 L32 19 L47 44" fill="none" stroke="{{ '#0F3D2E' if negativo else '#FFFFFF' }}" stroke-width="6"/>
+  <path d="M13 50.5 H51" stroke="#3FA66B" stroke-width="4"/>
+</svg>
+{%- endmacro %}
+
+{% macro logotipo(negativo=false) -%}
+<span class="logotipo{{ ' logotipo-negativo' if negativo }}">
+  {{ simbolo(36, negativo) }}
+  <span class="logotipo-texto"><span class="logotipo-nome">AKONA</span> <span class="logotipo-sub">ENERGY</span></span>
+</span>
+{%- endmacro %}

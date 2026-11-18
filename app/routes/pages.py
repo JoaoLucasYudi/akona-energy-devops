@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime
 from pathlib import Path
 from typing import Annotated
@@ -14,11 +15,18 @@ CIDADAO_DEMO_ID = 1
 PERIODOS = (30, 90)
 
 templates = Jinja2Templates(directory=Path(__file__).parent.parent / "templates")
+# Muda a URL do CSS a cada versão, para o navegador não juntar HTML novo com CSS antigo em cache.
+_CSS = Path(__file__).parent.parent / "static" / "style.css"
+templates.env.globals["versao_css"] = hashlib.sha256(_CSS.read_bytes()).hexdigest()[:10]
 router = APIRouter(default_response_class=HTMLResponse)
 
 
 def _data_hora(valor: str | None) -> str:
     return datetime.fromisoformat(valor).strftime("%d/%m/%Y %H:%M") if valor else "—"
+
+
+def _data(valor: str) -> str:
+    return datetime.fromisoformat(valor).strftime("%d/%m/%Y")
 
 
 def _numero(valor: float | None, casas: int = 1) -> str:
@@ -27,6 +35,7 @@ def _numero(valor: float | None, casas: int = 1) -> str:
 
 templates.env.filters["data_hora"] = _data_hora
 templates.env.filters["numero"] = _numero
+templates.env.filters["data"] = _data
 
 Dias = Annotated[int, Query(ge=1, le=365)]
 

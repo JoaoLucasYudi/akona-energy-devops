@@ -19,6 +19,18 @@ def test_home_apresenta_proposta_e_links_de_demonstracao(client):
         assert f'href="{link}"' in resposta.text
 
 
+def test_paginas_nao_carregam_script_nem_recurso_externo(client):
+    paginas = ("/", "/chamados", "/chamados/novo", "/gestao", "/transparencia", "/privacidade")
+    for caminho in paginas:
+        html = client.get(caminho).text
+        assert "<script" not in html
+        assert not re.search(r'<(link|img|source)[^>]+(src|href)="https?://', html)
+
+
+def test_css_tem_versao_na_url_para_nao_ficar_em_cache(client):
+    assert re.search(r'href="/static/style\.css\?v=[0-9a-f]{10}"', client.get("/").text)
+
+
 def test_area_do_cidadao_lista_so_os_chamados_dele(client):
     resposta = client.get("/chamados")
     assert resposta.status_code == 200

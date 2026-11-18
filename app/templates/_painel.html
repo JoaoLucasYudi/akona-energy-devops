@@ -7,6 +7,7 @@
 {% endmacro %}
 
 {% macro tabela_bairros(linhas, legenda) %}
+<div class="rolagem">
 <table class="bairros">
   <caption>{{ legenda }}</caption>
   <thead>
@@ -22,11 +23,12 @@
       <td>{{ linha.chamados }}</td>
       <td>
         <span class="barra"><span style="width: {{ linha.barra_percentual }}%"></span></span>
-        {{ linha.tempo_medio_horas | numero }} h
+        {{ linha.tempo_medio_horas | numero }}&nbsp;h
       </td>
       <td>{{ linha.percentual_no_prazo | numero }}%</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
 {% endmacro %}
