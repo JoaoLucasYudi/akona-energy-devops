@@ -162,3 +162,7 @@ scripts/gerar_pdf.sh
 O PDF sai em `docs/relatorio/relatorio.pdf`. Os prints de evidência ficam fora do Git; o script os procura em `~/Documents/prints-gs-devops-4nao/`, ou na pasta informada em `PRINTS`. Fora do macOS, informe o caminho do Chrome em `CHROME`.
 
 O diagrama de arquitetura entra no PDF como `docs/evidencias/00-arquitetura.png`, exportado do Mermaid de `docs/arquitetura.md` com o [mermaid-cli](https://github.com/mermaid-js/mermaid-cli).
+
+## Identidade visual e fontes
+
+O visual segue o manual de identidade visual da equipe: verdes sóbrios sobre branco, títulos em Manrope e texto em Inter. As duas fontes (SIL Open Font License 1.1) vêm do [Fontsource](https://fontsource.org) e ficam em `app/static/fonts/`, com as licenças ao lado. O site não carrega nada de fora: sem CDN, sem Google Fonts e sem JavaScript.

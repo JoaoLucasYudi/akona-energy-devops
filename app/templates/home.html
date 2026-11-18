@@ -1,30 +1,111 @@
 {% extends "base.html" %}
+{% block classe_main %}landing{% endblock %}
 {% block conteudo %}
-<section class="destaque">
-  <h1>Iluminação e energia que funcionam para quem mora em Osasco</h1>
-  <p>
-    No Akona Energy, o cidadão reporta problemas de iluminação pública e de energia
-    (poste apagado, lâmpada piscando, fio caído, queda de energia) e a gestão, seja a
-    prefeitura ou a concessionária, acompanha, prioriza e resolve os chamados com dados.
-  </p>
+<section class="hero">
+  <svg class="hero-marca-dagua" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <path d="M14 46 L32 16 L50 46" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+    <path d="M10 53 H54" stroke="#FFFFFF" stroke-width="4"/>
+  </svg>
+  <div class="secao-interna hero-interno">
+    <p class="sobretitulo">Iluminação pública e energia · Osasco (SP)</p>
+    <h1>Rua escura tem prazo.<br><span>O Akona mede esse prazo.</span></h1>
+    <p class="hero-texto">
+      O morador avisa sobre o poste apagado em segundos, sem cadastro. A prefeitura ou a
+      concessionária recebe o chamado numa fila única, resolve e acompanha o tempo de reparo
+      de cada bairro.
+    </p>
+    <div class="acoes">
+      <a class="botao botao-claro" href="/chamados/novo">Abrir chamado</a>
+      <a class="botao botao-contorno" href="/gestao">Ver painel da gestão</a>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Escolha uma área da demonstração</h2>
-  <p>Não há senha: cada link abre uma visão pronta, com dados simulados de bairros de Osasco.</p>
-  <div class="cartoes">
-    <a class="cartao" href="/chamados">
-      <strong>Sou cidadão</strong>
-      <span>Veja os chamados de uma moradora fictícia e abra um novo.</span>
-    </a>
-    <a class="cartao" href="/gestao">
-      <strong>Gestão</strong>
-      <span>Atenda a fila de chamados e veja prazos e tempo de reparo por bairro.</span>
-    </a>
-    <a class="cartao" href="/transparencia">
-      <strong>Transparência</strong>
-      <span>Veja o tempo de reparo e o cumprimento de prazo em cada bairro.</span>
-    </a>
+<section class="secao">
+  <div class="secao-interna">
+    <p class="sobretitulo">O problema</p>
+    <h2>Uma rua apagada é uma rua menos segura, e hoje ninguém mede quanto tempo ela fica assim.</h2>
+    <div class="numeros">
+      <div class="numero">
+        <strong>−36%</strong>
+        <p>Queda de pelo menos 36% nos crimes noturnos em área externa quando as ruas ganharam mais luz, num experimento controlado em Nova York.</p>
+        <small>Fonte: <a href="https://www2.nber.org/digest/jul19/w25798.shtml">Chalfin et al., NBER w25798 (2019)</a></small>
+      </div>
+      <div class="numero">
+        <strong>6,9%</strong>
+        <p>Das 6.050 reclamações sobre iluminação no DF entre janeiro e setembro, só 6,9% constavam como resolvidas.</p>
+        <small>Fonte: <a href="https://www.metropoles.com/distrito-federal/ceb-resolve-so-69-das-reclamacoes-sobre-iluminacao-precaria-no-df">Metrópoles, dados da Ouvidoria do GDF</a></small>
+      </div>
+      <div class="numero">
+        <strong>COSIP</strong>
+        <p>O cidadão paga a iluminação pública na conta de luz mesmo quando a rua está escura.</p>
+        <small>Fonte: <a href="https://www.correiobraziliense.com.br/cbradar/iluminacao-publica-prefeitura-omissao-acao-civil-publica/">Correio Braziliense, 29/10/2026</a></small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao-nevoa">
+  <div class="secao-interna">
+    <p class="sobretitulo">Como funciona</p>
+    <h2>Do poste apagado ao prazo medido</h2>
+    <ol class="passos">
+      <li>
+        <span class="passo-numero">01</span>
+        <h3>QR code no poste</h3>
+        <p>O morador lê o adesivo no poste e o chamado já sai com o código do ponto de luz, sem pedir nome nem endereço.
+          <a href="/chamados/novo?ponto=OSC-01234">Ver o exemplo</a></p>
+      </li>
+      <li>
+        <span class="passo-numero">02</span>
+        <h3>Protocolo na hora</h3>
+        <p>O chamado entra na fila da gestão e o morador recebe um número de protocolo para acompanhar o status.</p>
+      </li>
+      <li>
+        <span class="passo-numero">03</span>
+        <h3>Prazo medido</h3>
+        <p>Cada tipo de problema tem prazo: fio caído em 6&nbsp;h, queda de energia em 24&nbsp;h, poste apagado em 48&nbsp;h e lâmpada piscando em 72&nbsp;h.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="secao-interna">
+    <p class="sobretitulo">Acesse a demonstração</p>
+    <h2>Três visões do mesmo serviço</h2>
+    <p class="secao-intro">Não há senha. Cada link abre uma visão pronta, com dados simulados de bairros de Osasco.</p>
+    <div class="acessos">
+      <a class="acesso" href="/chamados">
+        <span class="acesso-rotulo">Cidadão</span>
+        <strong>Meus chamados</strong>
+        <span>Veja os chamados de uma moradora fictícia e abra um novo.</span>
+        <span class="acesso-link">Acessar →</span>
+      </a>
+      <a class="acesso" href="/gestao">
+        <span class="acesso-rotulo">Prefeitura ou concessionária</span>
+        <strong>Painel da gestão</strong>
+        <span>Atenda a fila de chamados e veja prazos e tempo de reparo por bairro.</span>
+        <span class="acesso-link">Acessar →</span>
+      </a>
+      <a class="acesso" href="/transparencia">
+        <span class="acesso-rotulo">Fiscalização</span>
+        <strong>Transparência</strong>
+        <span>Veja o tempo de reparo e o cumprimento de prazo em cada bairro.</span>
+        <span class="acesso-link">Acessar →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="faixa">
+  <div class="secao-interna faixa-interna">
+    <div>
+      <h2>Leve o Akona para a sua cidade</h2>
+      <p>Piloto de 12 meses por CPSI, o contrato do Marco Legal das Startups para testar soluções no poder público.
+        O critério de sucesso é público: tempo de reparo 30% menor e 85% dos chamados no prazo.</p>
+    </div>
+    <a class="botao botao-claro" href="/gestao">Ver painel da gestão</a>
   </div>
 </section>
 {% endblock %}
