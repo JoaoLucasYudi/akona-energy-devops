@@ -135,7 +135,11 @@ Um push na `main` vai para produção sem intervenção: o pipeline publica a im
 
 ![Painel da gestão](prints/15c-gestao.png)
 
-*15c · Painel da gestão (`/gestao`), com as contagens por status, tipo e bairro.*
+*15c · Painel da gestão (`/gestao`): indicadores de chamados abertos, tempo médio de reparo, % no prazo, gap de equidade e reincidência, e a fila de chamados com as ações Iniciar e Resolver.*
+
+![Transparência](prints/15e-transparencia.png)
+
+*15e · Página pública de transparência (`/transparencia`): tempo médio de reparo e % de chamados no prazo, por bairro, sem identificar ninguém.*
 
 ![Revisão ativa](prints/16-revisao-ativa.png)
 
